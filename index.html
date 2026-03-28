@@ -282,7 +282,7 @@ const FINNHUB_ETFS = {
 };
 
 // Chart history symbols
-const STOOQ_HIST  = ["^spx","^hex","^omxs","^dax","^cac"];
+const STOOQ_HIST  = ["^spx","^ndq","^dji","^dax","^cac","^ukx","^hex","^omxs","^omxc25","^oseax"];
 const FINNHUB_HIST = ["GLD"];
 
 let D = {}; // all live data keyed by symbol
@@ -304,13 +304,41 @@ function fmtChg(d, dp) {
   const arr = d>0?'▲':d<0?'▼':'–';
   return `<span class="${cls}">${arr} ${Math.abs(dp).toFixed(2)}%</span>`;
 }
-function tile(label, q, sourceTag) {
+function getPeriodChg(histKey, weeksAgo) {
+  const h = D[`hist_${histKey}`];
+  if (!h?.c?.length) return null;
+  const arr = h.c;
+  const idx = arr.length - 1 - weeksAgo;
+  if (idx < 0) return null;
+  const old = arr[idx];
+  const cur = arr[arr.length - 1];
+  if (!old || !cur) return null;
+  return ((cur - old) / old) * 100;
+}
+
+function fmtPeriod(pct) {
+  if (pct == null) return '<span class="flat">—</span>';
+  const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat';
+  const arr = pct > 0 ? '▲' : pct < 0 ? '▼' : '–';
+  return `<span class="${cls}">${arr}${Math.abs(pct).toFixed(1)}%</span>`;
+}
+
+function tile(label, q, sourceTag, histKey) {
   if (!q || !q.c) return `<div class="metric-tile"><div class="metric-label">${label}</div><div class="metric-value" style="font-size:14px;color:var(--text-dim);">No data</div></div>`;
+  const w1  = histKey ? getPeriodChg(histKey, 1)  : null;
+  const m1  = histKey ? getPeriodChg(histKey, 4)  : null;
+  const m3  = histKey ? getPeriodChg(histKey, 13) : null;
+  const y1  = histKey ? getPeriodChg(histKey, 52) : null;
   return `<div class="metric-tile">
     <div class="metric-label">${label}</div>
     <div class="metric-value">${fmt(q.c)}</div>
-    <div class="metric-change">${fmtChg(q.d, q.dp)}</div>
-    <div class="metric-sub">Prev ${fmt(q.pc)}</div>
+    <div class="metric-change">${fmtChg(q.d, q.dp)} <span style="color:var(--text-dim);font-size:9px;">1D</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;font-size:9px;">
+      <span>${fmtPeriod(w1)} <span style="color:var(--text-dim);">1W</span></span>
+      <span>${fmtPeriod(m1)} <span style="color:var(--text-dim);">1M</span></span>
+      <span>${fmtPeriod(m3)} <span style="color:var(--text-dim);">3M</span></span>
+      <span>${fmtPeriod(y1)} <span style="color:var(--text-dim);">1Y</span></span>
+    </div>
     ${sourceTag ? `<span class="source-tag">${sourceTag}</span>` : ''}
   </div>`;
 }
@@ -428,17 +456,17 @@ async function fetchAI() {
 // ── Render ───────────────────────────────────────────────
 function renderAll() {
   // US: stooq indices + IWM
-  const usTiles = STOOQ_INDICES.us.map(({s,label}) => tile(label, D[s.toLowerCase()], 'INDEX'));
-  usTiles.push(tile('Russell 2000', D['IWM'], 'ETF'));
+  const usTiles = STOOQ_INDICES.us.map(({s,label}) => tile(label, D[s.toLowerCase()], 'INDEX', s));
+  usTiles.push(tile('Russell 2000', D['IWM'], 'ETF', null));
   $('usEquities').innerHTML = usTiles.join('');
 
   // Europe: stooq indices + VGK
-  const euTiles = STOOQ_INDICES.europe.map(({s,label}) => tile(label, D[s.toLowerCase()], 'INDEX'));
-  euTiles.push(tile('Stoxx 600 (VGK)', D['VGK'], 'ETF'));
+  const euTiles = STOOQ_INDICES.europe.map(({s,label}) => tile(label, D[s.toLowerCase()], 'INDEX', s));
+  euTiles.push(tile('Stoxx 600 (VGK)', D['VGK'], 'ETF', null));
   $('euEquities').innerHTML = euTiles.join('');
 
   // Nordic: all stooq
-  $('nordicEquities').innerHTML = STOOQ_INDICES.nordic.map(({s,label}) => tile(label, D[s.toLowerCase()], 'INDEX')).join('');
+  $('nordicEquities').innerHTML = STOOQ_INDICES.nordic.map(({s,label}) => tile(label, D[s.toLowerCase()], 'INDEX', s)).join('');
 
   // Commodities table
   renderFhTable('commodTable', FINNHUB_ETFS.commod);
