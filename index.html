@@ -411,7 +411,7 @@ async function fetchAI() {
   const prompt = `You are a market strategist writing a weekly briefing for Courage Ventures, a Nordic+Baltic healthtech VC fund based in Helsinki. Based on this live data:\n\n${lines.join('\n')}\n\nReturn ONLY valid JSON (no markdown):\n{"narrative":"3 paragraphs: (1) dominant macro theme, (2) cross-asset signals, (3) Nordic/healthtech VC implications","trendspot":"2 paragraphs using Perceive-Prospect-Act framework","scenarioNarrative":"2 paragraphs on bull/base/bear probabilities","signals":{"megatrends":[{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PROSPECT"},{"title":"","description":"","phase":"ACT"}],"weakSignals":[{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PROSPECT"}],"wildCards":[{"title":"","description":"","impact":"HIGH"},{"title":"","description":"","impact":"EXTREME"}]},"momentum":[{"asset":"","signal":"","direction":"DOWN","strength":70},{"asset":"","signal":"","direction":"UP","strength":65},{"asset":"","signal":"","direction":"DOWN","strength":60},{"asset":"","signal":"","direction":"FLAT","strength":55}],"divergences":[{"title":"","description":""},{"title":"","description":""}],"dominantPhase":"PERCEIVE"}`;
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages",{
+    const res = await fetch(`${WORKER}/?source=anthropic`,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,messages:[{role:"user",content:prompt}]})
