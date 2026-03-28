@@ -281,9 +281,9 @@ const FINNHUB_ETFS = {
   ],
 };
 
-// Chart history symbols
-const STOOQ_HIST  = ["^spx","^ndq","^dji","^dax","^cac","^ukx","^hex","^omxs","^omxc25","^oseax"];
-const FINNHUB_HIST = ["GLD"];
+// Chart history symbols — all via stooq, GLD uses stooq US symbol
+const STOOQ_HIST  = ["^spx","^ndq","^dji","^dax","^cac","^ukx","^hex","^omxs","^omxc25","^oseax","gld.us"];
+const FINNHUB_HIST = [];
 
 let D = {}; // all live data keyed by symbol
 let aiData = null;
@@ -308,8 +308,8 @@ function getPeriodChg(histKey, weeksAgo) {
   const h = D[`hist_${histKey}`];
   if (!h?.c?.length) return null;
   const arr = h.c;
-  const idx = arr.length - 1 - weeksAgo;
-  if (idx < 0) return null;
+  // Use first available point for 1Y if we don't have 52 weeks
+  const idx = weeksAgo >= arr.length ? 0 : arr.length - 1 - weeksAgo;
   const old = arr[idx];
   const cur = arr[arr.length - 1];
   if (!old || !cur) return null;
@@ -615,7 +615,7 @@ function renderCharts() {
     {label:'CAC 40',data:cac.data,borderColor:'#f59e0b',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
   ]},options:COPTS});
 
-  const gld = extractFinnhub('GLD');
+  const gld = extractStooq('gld.us');
   const ctxG = $('chartGold').getContext('2d');
   chartInstances.gold = new Chart(ctxG,{type:'line',data:{labels:gld.labels,datasets:[{label:'Gold (GLD)',data:gld.data,borderColor:'#3ddc84',backgroundColor:grad(ctxG,'#3ddc84'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
 }
