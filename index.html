@@ -417,6 +417,7 @@ async function fetchAI() {
       body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,messages:[{role:"user",content:prompt}]})
     });
     const data = await res.json();
+    if (!data.content) { console.warn('AI response missing content:', data); return null; }
     const text = data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
     const match = text.match(/\{[\s\S]*\}/);
     if (match) return JSON.parse(match[0]);
