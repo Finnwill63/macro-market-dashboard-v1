@@ -130,7 +130,6 @@
   <div class="tab" onclick="tab('trendspot',this)">Trendspotting</div>
   <div class="tab" onclick="tab('scenario',this)">Scenario Analysis</div>
   <div class="tab" onclick="tab('signals',this)">Signal Monitor</div>
-  <div class="tab" onclick="tab('charts',this)">Charts</div>
 </div>
 
 <div class="main">
@@ -193,16 +192,7 @@
     <div class="narrative" id="signarr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
-  <div class="panel" id="panel-charts">
-    <div class="grid-2">
-      <div class="card"><div style="font-size:9px;letter-spacing:.14em;color:var(--gold);margin-bottom:12px;">S&P 500 (SPY) — 52 WEEKS</div><div class="chart-wrap"><canvas id="cSP"></canvas></div></div>
-      <div class="card"><div style="font-size:9px;letter-spacing:.14em;color:var(--gold);margin-bottom:12px;">NORDIC ETF PROXIES — 52 WEEKS</div><div class="chart-wrap"><canvas id="cNK"></canvas></div></div>
-    </div>
-    <div class="grid-2">
-      <div class="card"><div style="font-size:9px;letter-spacing:.14em;color:var(--gold);margin-bottom:12px;">EUROPEAN ETF PROXIES — 52 WEEKS</div><div class="chart-wrap"><canvas id="cEU"></canvas></div></div>
-      <div class="card"><div style="font-size:9px;letter-spacing:.14em;color:var(--gold);margin-bottom:12px;">GOLD (GLD) — 52 WEEKS</div><div class="chart-wrap"><canvas id="cGLD"></canvas></div></div>
-    </div>
-  </div>
+
 </div>
 
 <script>
@@ -316,8 +306,6 @@ async function init() {
     await fhBatch([...FH_US,...FH_EU,...FH_COMMOD,...FH_RATES].map(x=>x.s));
     st(4,'done'); st(5,'active');
 
-    // Chart history via Finnhub ETFs
-    for(const s of CHART_SYMS) await fhHist(s);
     st(5,'done'); st(6,'active');
 
     AI = await callAI();
@@ -463,9 +451,13 @@ const COPTS={responsive:true,maintainAspectRatio:false,
 function grad(ctx,col){const g=ctx.createLinearGradient(0,0,0,300);g.addColorStop(0,col+'40');g.addColorStop(1,col+'00');return g;}
 
 function extr(sym) {
-  const h=D['hist_'+sym];
-  if(!h||!h.t||!h.t.length||h.s==='no data') return {labels:[],data:[]};
-  return {labels:h.t.map(t=>{const d=new Date(t*1000);return d.getDate()+' '+d.toLocaleString('en',{month:'short'});}),data:h.c};
+  const h = D['hist_'+sym];
+  if (!h || !h.t || !h.t.length || h.s === 'no data') return {labels:[],data:[]};
+  // Alpha Vantage returns date strings like "2025-03-28"
+  return {
+    labels: h.t.map(d => { const p=d.split('-'); return p[2]+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1]; }),
+    data: h.c
+  };
 }
 
 function renderCharts() {
