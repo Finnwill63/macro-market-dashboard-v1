@@ -347,7 +347,12 @@ function tile(label, q, sourceTag, histKey) {
 async function stooqBatch(symbols) {
   const res = await fetch(`${WORKER}/?source=stooq&type=batch&symbols=${symbols.join(',')}`);
   const json = await res.json();
-  (json.quotes||[]).forEach(q => { D[q.symbol.toLowerCase()] = q; });
+  (json.quotes||[]).forEach(q => {
+    if (q && q.c) {
+      D[q.symbol.toLowerCase()] = q; // e.g. D['^spx']
+      D[q.symbol] = q;               // e.g. D['^SPX']
+    }
+  });
 }
 async function finnhubBatch(symbols) {
   const res = await fetch(`${WORKER}/?type=batch&symbols=${symbols.join(',')}`);
