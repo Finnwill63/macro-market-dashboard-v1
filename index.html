@@ -249,8 +249,15 @@ const FINNHUB_ETFS = {
   rates:        [{s:"IEF",label:"US 10Y Bond (IEF)"},{s:"SHY",label:"US 2Y Bond (SHY)"},{s:"TLT",label:"US 30Y Bond (TLT)"},{s:"HYG",label:"High Yield (HYG)"}],
 };
 
-const STOOQ_HIST  = ["^spx","^ndq","^dji","^dax","^cac","^ukx","^hex","^omxs","^omxc25","^oseax","gld.us"];
-const FINNHUB_HIST = [];
+// Charts use Finnhub ETF proxies for history (stooq CSV is blocked)
+const CHART_HIST = [
+  {key:"SPY",  label:"S&P 500"},
+  {key:"EFNL", label:"Finland (EFNL)"},
+  {key:"EWD",  label:"Sweden (EWD)"},
+  {key:"EWG",  label:"DAX (EWG)"},
+  {key:"EWQ",  label:"CAC 40 (EWQ)"},
+  {key:"GLD",  label:"Gold (GLD)"},
+];
 
 let D = {};
 let aiData = null;
@@ -381,11 +388,14 @@ async function fetchAllData() {
     await finnhubBatch(fhSymbols);
     step(4,'done');
 
-    // Step 5: Historical data
+    // Step 5: Historical data via Finnhub ETF proxies
     step(5,'active');
-    for (const s of STOOQ_HIST) {
-      const h = await stooqHist(s);
-      D['hist_' + s] = h;
+    for (const {key} of CHART_HIST) {
+      const to   = Math.floor(Date.now()/1000);
+      const from = to - 365*24*60*60;
+      const res  = await fetch(`${WORKER}/?type=history&symbol=${key}&resolution=W&from=${from}&to=${to}`);
+      const h    = await res.json();
+      D['hist_'+key] = h;
     }
     step(5,'done');
 
@@ -571,11 +581,11 @@ function grad(ctx, col) {
   g.addColorStop(0,col+'40'); g.addColorStop(1,col+'00'); return g;
 }
 
-function extractStooq(key) {
+function extractHist(key) {
   const h = D['hist_' + key];
-  if (!h || !h.t || !h.t.length) return {labels:[],data:[]};
+  if (!h || !h.t || !h.t.length || h.s === 'no data') return {labels:[],data:[]};
   return {
-    labels: h.t.map(d => { const p=d.split('-'); return p[2]+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1]; }),
+    labels: h.t.map(t => { const d=new Date(t*1000); return d.getDate()+' '+d.toLocaleString('en',{month:'short'}); }),
     data: h.c
   };
 }
@@ -584,29 +594,29 @@ function renderCharts() {
   Object.values(chartInstances).forEach(c => c.destroy());
   chartInstances = {};
 
-  const sp = extractStooq('^spx');
+  const sp = extractHist('SPY');
   const ctxSP = $('chartSP').getContext('2d');
-  chartInstances.sp = new Chart(ctxSP,{type:'line',data:{labels:sp.labels,datasets:[{label:'S&P 500',data:sp.data,borderColor:'#c9a84c',backgroundColor:grad(ctxSP,'#c9a84c'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
+  chartInstances.sp = new Chart(ctxSP,{type:'line',data:{labels:sp.labels,datasets:[{label:'S&P 500 (SPY)',data:sp.data,borderColor:'#c9a84c',backgroundColor:grad(ctxSP,'#c9a84c'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
 
-  const hex  = extractStooq('^hex');
-  const omxs = extractStooq('^omxs');
+  const efnl = extractHist('EFNL');
+  const ewd  = extractHist('EWD');
   const ctxN = $('chartNordic').getContext('2d');
-  chartInstances.nordic = new Chart(ctxN,{type:'line',data:{labels:hex.labels,datasets:[
-    {label:'Finland OMXH',data:hex.data,borderColor:'#4d9de0',backgroundColor:grad(ctxN,'#4d9de0'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
-    {label:'Sweden OMXS',data:omxs.data,borderColor:'#c9a84c',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
+  chartInstances.nordic = new Chart(ctxN,{type:'line',data:{labels:efnl.labels,datasets:[
+    {label:'Finland (EFNL)',data:efnl.data,borderColor:'#4d9de0',backgroundColor:grad(ctxN,'#4d9de0'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
+    {label:'Sweden (EWD)', data:ewd.data, borderColor:'#c9a84c',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
   ]},options:COPTS});
 
-  const dax = extractStooq('^dax');
-  const cac = extractStooq('^cac');
+  const ewg = extractHist('EWG');
+  const ewq = extractHist('EWQ');
   const ctxE = $('chartEurope').getContext('2d');
-  chartInstances.europe = new Chart(ctxE,{type:'line',data:{labels:dax.labels,datasets:[
-    {label:'DAX',data:dax.data,borderColor:'#f05252',backgroundColor:grad(ctxE,'#f05252'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
-    {label:'CAC 40',data:cac.data,borderColor:'#f59e0b',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
+  chartInstances.europe = new Chart(ctxE,{type:'line',data:{labels:ewg.labels,datasets:[
+    {label:'DAX (EWG)',   data:ewg.data,borderColor:'#f05252',backgroundColor:grad(ctxE,'#f05252'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
+    {label:'CAC 40 (EWQ)',data:ewq.data,borderColor:'#f59e0b',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
   ]},options:COPTS});
 
-  const gld = extractStooq('gld.us');
+  const gld = extractHist('GLD');
   const ctxG = $('chartGold').getContext('2d');
-  chartInstances.gold = new Chart(ctxG,{type:'line',data:{labels:gld.labels,datasets:[{label:'Gold (GLD.US)',data:gld.data,borderColor:'#3ddc84',backgroundColor:grad(ctxG,'#3ddc84'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
+  chartInstances.gold = new Chart(ctxG,{type:'line',data:{labels:gld.labels,datasets:[{label:'Gold (GLD)',data:gld.data,borderColor:'#3ddc84',backgroundColor:grad(ctxG,'#3ddc84'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
 }
 
 // ── Tab switching ─────────────────────────────────────────
