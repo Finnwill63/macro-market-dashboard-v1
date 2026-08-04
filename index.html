@@ -66,7 +66,8 @@
   .sdesc{font-size:10px;color:var(--text-muted);line-height:1.5;}
   .smeta{display:flex;gap:8px;margin-top:6px;}
   .sphase{font-size:9px;padding:1px 6px;background:var(--surface2);border:1px solid var(--border2);color:var(--text-dim);}
-  .chart-wrap{position:relative;height:300px;}
+  .chart-wrap{position:relative;height:260px;margin-bottom:4px;}
+  .chart-label{font-size:9px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;}
   .sgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
   .scard{background:var(--surface);border:1px solid var(--border);padding:16px;}
   .scard.bear{border-top:2px solid var(--red);}
@@ -99,7 +100,9 @@
   .pitem{flex:1;padding:8px;text-align:center;font-size:9px;letter-spacing:.08em;text-transform:uppercase;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);}
   .pitem.active{background:rgba(201,168,76,.1);border-color:var(--gold);color:var(--gold);}
   .pnum{font-family:'Fraunces',serif;font-size:16px;font-weight:700;display:block;margin-bottom:2px;}
-  @media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.sgrid{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .chart-card{background:var(--surface);border:1px solid var(--border);padding:16px;}
+  @media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.sgrid{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.charts-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -130,6 +133,7 @@
   <div class="tab" onclick="tab('trendspot',this)">Trendspotting</div>
   <div class="tab" onclick="tab('scenario',this)">Scenario Analysis</div>
   <div class="tab" onclick="tab('signals',this)">Signal Monitor</div>
+  <div class="tab" onclick="tab('charts',this)">Charts</div>
 </div>
 
 <div class="main">
@@ -138,6 +142,7 @@
     <span style="margin-left:auto;font-size:9px;color:var(--text-dim);">Stooq (quotes) · Finnhub (history/ETFs) · Cloudflare Worker</span>
   </div>
 
+  <!-- ── DASHBOARD ─────────────────────────────────────── -->
   <div class="panel active" id="panel-dashboard">
     <div class="slabel">US Equities 🇺🇸</div><div class="grid-4" id="usEq"></div>
     <div class="slabel">European Equities 🇪🇺</div><div class="grid-4" id="euEq"></div>
@@ -152,6 +157,7 @@
     <div class="narrative" id="narr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
+  <!-- ── TRENDSPOTTING ──────────────────────────────────── -->
   <div class="panel" id="panel-trendspot">
     <div class="slabel">Foresight Lifecycle</div>
     <div class="pbar">
@@ -167,6 +173,7 @@
     <div class="narrative" id="trendnarr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
+  <!-- ── SCENARIO ANALYSIS ─────────────────────────────── -->
   <div class="panel" id="panel-scenario">
     <div class="slabel">Stress-Test Variables</div>
     <div class="card" style="margin-bottom:16px;">
@@ -181,6 +188,7 @@
     <div class="narrative" id="scenarr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
+  <!-- ── SIGNAL MONITOR ────────────────────────────────── -->
   <div class="panel" id="panel-signals">
     <div class="slabel">Signal Classification</div>
     <div class="grid-3">
@@ -192,8 +200,37 @@
     <div class="narrative" id="signarr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
+  <!-- ── CHARTS ─────────────────────────────────────────── -->
+  <div class="panel" id="panel-charts">
+    <div class="charts-grid">
 
-</div>
+      <div class="chart-card">
+        <div class="chart-label">S&amp;P 500 — 52 Week (SPY)</div>
+        <div class="chart-wrap"><canvas id="cSP"></canvas></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-label">Nordic Equities — Finland &amp; Sweden (EFNL / EWD)</div>
+        <div class="chart-wrap"><canvas id="cNK"></canvas></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-label">European Equities — DAX &amp; CAC 40 (EWG / EWQ)</div>
+        <div class="chart-wrap"><canvas id="cEU"></canvas></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-label">Gold — 52 Week (GLD)</div>
+        <div class="chart-wrap"><canvas id="cGLD"></canvas></div>
+      </div>
+
+    </div>
+    <div class="narrative" id="chartnarr" style="margin-top:4px;">
+      <p style="color:var(--text-dim);">Switch to this tab after data loads to render charts.</p>
+    </div>
+  </div>
+
+</div><!-- /.main -->
 
 <script>
 const W = "https://market-proxy.william-cardwell.workers.dev";
@@ -230,6 +267,7 @@ function chg(d,dp) {
 async function stooqBatch(syms) {
   try {
     const r = await fetch(`${W}/?source=stooq&type=batch&symbols=${syms.join(',')}`);
+    if (!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
     (j.quotes||[]).forEach(q => { if(q&&q.c){D[q.symbol.toLowerCase()]=q;D[q.symbol]=q;} });
   } catch(e) { console.warn('stooqBatch error',e); }
@@ -238,6 +276,7 @@ async function stooqBatch(syms) {
 async function stooqOne(s) {
   try {
     const r = await fetch(`${W}/?source=stooq&type=quote&symbol=${s}`);
+    if (!r.ok) throw new Error('HTTP '+r.status);
     const q = await r.json();
     if(q&&q.c){D[s.toLowerCase()]=q;D[s]=q;}
   } catch(e) { console.warn('stooqOne error',s,e); }
@@ -246,6 +285,7 @@ async function stooqOne(s) {
 async function fhBatch(syms) {
   try {
     const r = await fetch(`${W}/?type=batch&symbols=${syms.join(',')}`);
+    if (!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
     (j.quotes||[]).forEach(q => { if(q&&q.c) D[q.symbol]=q; });
   } catch(e) { console.warn('fhBatch error',e); }
@@ -256,6 +296,7 @@ async function fhHist(sym) {
     const to   = Math.floor(Date.now()/1000);
     const from = to - 365*24*60*60;
     const r = await fetch(`${W}/?type=history&symbol=${sym}&resolution=W&from=${from}&to=${to}`);
+    if (!r.ok) throw new Error('HTTP '+r.status);
     const h = await r.json();
     D['hist_'+sym] = h;
   } catch(e) { console.warn('fhHist error',sym,e); }
@@ -274,6 +315,7 @@ async function callAI() {
     });
     const prompt = `You are a market strategist for Courage Ventures, a Nordic+Baltic healthtech VC fund in Helsinki. Live data:\n\n${lines.join('\n')}\n\nReturn ONLY valid JSON:\n{"narrative":"3 paragraphs: macro theme, cross-asset signals, Nordic/healthtech VC implications","trendspot":"2 paragraphs Perceive-Prospect-Act framework","scenarioNarrative":"2 paragraphs bull/base/bear","signals":{"megatrends":[{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PROSPECT"},{"title":"","description":"","phase":"ACT"}],"weakSignals":[{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PROSPECT"}],"wildCards":[{"title":"","description":"","impact":"HIGH"},{"title":"","description":"","impact":"EXTREME"}]},"momentum":[{"asset":"","signal":"","direction":"DOWN","strength":70},{"asset":"","signal":"","direction":"UP","strength":65},{"asset":"","signal":"","direction":"DOWN","strength":60},{"asset":"","signal":"","direction":"FLAT","strength":55}],"divergences":[{"title":"","description":""},{"title":"","description":""}],"dominantPhase":"PERCEIVE"}`;
     const r = await fetch(`${W}/?source=anthropic`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,messages:[{role:"user",content:prompt}]})});
+    if (!r.ok) throw new Error('HTTP '+r.status);
     const data = await r.json();
     if(!data.content){console.warn('AI no content',data);return null;}
     const txt = data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
@@ -291,6 +333,10 @@ async function init() {
   $('stxt').textContent='Fetching…';
   D={};AI=null;
 
+  // Destroy any existing charts so canvases are clean on re-fetch
+  Object.values(CHARTS).forEach(c => { try { c.destroy(); } catch(_){} });
+  CHARTS = {};
+
   try {
     st(1,'active');
     await stooqBatch(US_IDX.map(x=>x.s));
@@ -299,13 +345,14 @@ async function init() {
     await stooqBatch(EU_IDX.map(x=>x.s));
     st(2,'done'); st(3,'active');
 
-    // Nordic one at a time — avoids ^ batch encoding issues
     for(const {s} of NK_IDX) await stooqOne(s);
     st(3,'done'); st(4,'active');
 
     await fhBatch([...FH_US,...FH_EU,...FH_COMMOD,...FH_RATES].map(x=>x.s));
     st(4,'done'); st(5,'active');
 
+    // Fetch chart history in parallel
+    await Promise.all(CHART_SYMS.map(s => fhHist(s)));
     st(5,'done'); st(6,'active');
 
     AI = await callAI();
@@ -333,12 +380,10 @@ function weekLabel() {
 
 // ── Render ────────────────────────────────────────────────
 function render() {
-  // Tiles
   renderTiles('usEq', [...US_IDX.map(({s,l})=>({s,l,src:'INDEX'})), ...FH_US.map(({s,l})=>({s,l,src:'ETF'}))]);
   renderTiles('euEq', [...EU_IDX.map(({s,l})=>({s,l,src:'INDEX'})), ...FH_EU.map(({s,l})=>({s,l,src:'ETF'}))]);
   renderTiles('nkEq', NK_IDX.map(({s,l})=>({s,l,src:'INDEX'})));
 
-  // Tables
   renderTable('ctbl', FH_COMMOD);
   renderTable('rtbl', FH_RATES);
 
@@ -348,7 +393,11 @@ function render() {
     renderTrendspot();
   }
   scenarios();
-  renderCharts();
+
+  // Only render charts if the charts panel is currently visible
+  if ($('panel-charts').classList.contains('active')) {
+    renderCharts();
+  }
 }
 
 function renderTiles(id, items) {
@@ -448,38 +497,61 @@ const COPTS={responsive:true,maintainAspectRatio:false,
   scales:{x:{ticks:{color:'#4b5563',font:{family:'DM Mono',size:9},maxRotation:45},grid:{color:'#1f2530'}},
     y:{ticks:{color:'#4b5563',font:{family:'DM Mono',size:9}},grid:{color:'#1f2530'}}}};
 
-function grad(ctx,col){const g=ctx.createLinearGradient(0,0,0,300);g.addColorStop(0,col+'40');g.addColorStop(1,col+'00');return g;}
+function grad(ctx,col){const g=ctx.createLinearGradient(0,0,0,260);g.addColorStop(0,col+'40');g.addColorStop(1,col+'00');return g;}
 
 function extr(sym) {
   const h = D['hist_'+sym];
   if (!h || !h.t || !h.t.length || h.s === 'no data') return {labels:[],data:[]};
-  // Alpha Vantage returns date strings like "2025-03-28"
   return {
-    labels: h.t.map(d => { const p=d.split('-'); return p[2]+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1]; }),
+    labels: h.t.map(d => {
+      const p = String(d).split('-');
+      if (p.length < 2) return d;
+      return p[2]+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(p[1])-1];
+    }),
     data: h.c
   };
 }
 
+function safeCanvas(id) {
+  const el = $(id);
+  if (!el) { console.warn('Canvas not found:', id); return null; }
+  return el.getContext('2d');
+}
+
 function renderCharts() {
-  Object.values(CHARTS).forEach(c=>c.destroy()); CHARTS={};
+  // Destroy existing charts first to avoid canvas reuse errors
+  Object.values(CHARTS).forEach(c => { try { c.destroy(); } catch(_){} });
+  CHARTS = {};
 
-  const sp=extr('SPY'), ctxSP=$('cSP').getContext('2d');
-  CHARTS.sp=new Chart(ctxSP,{type:'line',data:{labels:sp.labels,datasets:[{label:'S&P 500 (SPY)',data:sp.data,borderColor:'#c9a84c',backgroundColor:grad(ctxSP,'#c9a84c'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
+  const ctxSP = safeCanvas('cSP');
+  if (ctxSP) {
+    const sp = extr('SPY');
+    CHARTS.sp = new Chart(ctxSP,{type:'line',data:{labels:sp.labels,datasets:[{label:'S&P 500 (SPY)',data:sp.data,borderColor:'#c9a84c',backgroundColor:grad(ctxSP,'#c9a84c'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
+  }
 
-  const efnl=extr('EFNL'),ewd=extr('EWD'),ctxNK=$('cNK').getContext('2d');
-  CHARTS.nk=new Chart(ctxNK,{type:'line',data:{labels:efnl.labels,datasets:[
-    {label:'Finland (EFNL)',data:efnl.data,borderColor:'#4d9de0',backgroundColor:grad(ctxNK,'#4d9de0'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
-    {label:'Sweden (EWD)', data:ewd.data, borderColor:'#c9a84c',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
-  ]},options:COPTS});
+  const ctxNK = safeCanvas('cNK');
+  if (ctxNK) {
+    const efnl=extr('EFNL'), ewd=extr('EWD');
+    CHARTS.nk = new Chart(ctxNK,{type:'line',data:{labels:efnl.labels,datasets:[
+      {label:'Finland (EFNL)',data:efnl.data,borderColor:'#4d9de0',backgroundColor:grad(ctxNK,'#4d9de0'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
+      {label:'Sweden (EWD)', data:ewd.data, borderColor:'#c9a84c',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
+    ]},options:COPTS});
+  }
 
-  const ewg=extr('EWG'),ewq=extr('EWQ'),ctxEU=$('cEU').getContext('2d');
-  CHARTS.eu=new Chart(ctxEU,{type:'line',data:{labels:ewg.labels,datasets:[
-    {label:'DAX (EWG)',    data:ewg.data,borderColor:'#f05252',backgroundColor:grad(ctxEU,'#f05252'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
-    {label:'CAC 40 (EWQ)',data:ewq.data,borderColor:'#f59e0b',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
-  ]},options:COPTS});
+  const ctxEU = safeCanvas('cEU');
+  if (ctxEU) {
+    const ewg=extr('EWG'), ewq=extr('EWQ');
+    CHARTS.eu = new Chart(ctxEU,{type:'line',data:{labels:ewg.labels,datasets:[
+      {label:'DAX (EWG)',    data:ewg.data,borderColor:'#f05252',backgroundColor:grad(ctxEU,'#f05252'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
+      {label:'CAC 40 (EWQ)',data:ewq.data,borderColor:'#f59e0b',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
+    ]},options:COPTS});
+  }
 
-  const gld=extr('GLD'),ctxGLD=$('cGLD').getContext('2d');
-  CHARTS.gld=new Chart(ctxGLD,{type:'line',data:{labels:gld.labels,datasets:[{label:'Gold (GLD)',data:gld.data,borderColor:'#3ddc84',backgroundColor:grad(ctxGLD,'#3ddc84'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
+  const ctxGLD = safeCanvas('cGLD');
+  if (ctxGLD) {
+    const gld = extr('GLD');
+    CHARTS.gld = new Chart(ctxGLD,{type:'line',data:{labels:gld.labels,datasets:[{label:'Gold (GLD)',data:gld.data,borderColor:'#3ddc84',backgroundColor:grad(ctxGLD,'#3ddc84'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
+  }
 }
 
 // ── Tab switching ─────────────────────────────────────────
@@ -488,7 +560,10 @@ function tab(name, el) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
   $('panel-'+name).classList.add('active');
-  if(name==='charts') setTimeout(renderCharts,100);
+  if (name === 'charts') {
+    // Small delay so the panel is visible before canvas renders
+    setTimeout(renderCharts, 50);
+  }
 }
 
 init();
