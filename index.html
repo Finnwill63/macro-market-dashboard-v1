@@ -276,7 +276,7 @@ async function fetchAll(syms) {
     const r = await fetch(`${W}/?type=batch&symbols=${syms.join(',')}`);
     if (!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
-    (j.quotes||[]).forEach(q => { if (q && q.c) D[q.symbol] = q; });
+    (j.quotes||[]).forEach(q => { if (q && (q.c || q.pc)) D[q.symbol] = q; });
   } catch(e) { console.warn('fetchAll error', e); }
 }
 
@@ -384,12 +384,16 @@ function render() {
 function renderTiles(id, items) {
   $(id).innerHTML = items.map(({s,l,note}) => {
     const q = D[s];
-    if (!q || !q.c) return `<div class="tile"><div class="tlabel">${l}</div><div class="tvalue" style="font-size:14px;color:var(--text-dim);">No data</div></div>`;
+    if (!q || (!q.c && !q.pc)) return `<div class="tile"><div class="tlabel">${l}</div><div class="tvalue" style="font-size:14px;color:var(--text-dim);">No data</div></div>`;
+    const live = q.c && q.c > 0;
+    const price = live ? q.c : q.pc;
+    const srcLabel = live ? `ETF · ${note}` : `PREV CLOSE · ${note}`;
+    const srcColor = live ? 'var(--text-dim)' : 'var(--amber)';
     return `<div class="tile">
       <div class="tlabel">${l}</div>
-      <div class="tvalue">${f2(q.c)}</div>
-      <div class="tchange">${chg(q.d,q.dp)} <span style="color:var(--text-dim);font-size:9px;">1D</span></div>
-      <span class="tsrc">ETF · ${note}</span>
+      <div class="tvalue" style="${live ? '' : 'color:var(--text-muted)'}">${f2(price)}</div>
+      <div class="tchange">${live ? chg(q.d,q.dp)+' <span style="color:var(--text-dim);font-size:9px;">1D</span>' : '<span style="color:var(--amber);font-size:9px;">MKT CLOSED</span>'}</div>
+      <span class="tsrc" style="color:${srcColor}">${srcLabel}</span>
     </div>`;
   }).join('');
 }
@@ -397,9 +401,15 @@ function renderTiles(id, items) {
 function renderTable(id, items) {
   document.querySelector(`#${id} tbody`).innerHTML = items.map(({s,l}) => {
     const q = D[s];
-    if (!q || !q.c) return `<tr><td>${l}</td><td colspan="3" style="color:var(--text-dim);">—</td></tr>`;
+    if (!q || (!q.c && !q.pc)) return `<tr><td>${l}</td><td colspan="3" style="color:var(--text-dim);">—</td></tr>`;
+    const live = q.c && q.c > 0;
+    const price = live ? q.c : q.pc;
     const c = q.dp>0?'up':q.dp<0?'down':'flat';
-    return `<tr><td>${l}</td><td>${f2(q.c)}</td><td class="${c}">${q.d>0?'+':''}${q.d?.toFixed(2)}</td><td class="${c}">${q.dp>0?'+':''}${q.dp?.toFixed(2)}%</td></tr>`;
+    const priceCell = `<td style="${live ? '' : 'color:var(--amber)'}">${f2(price)}</td>`;
+    const changeCell = live
+      ? `<td class="${c}">${q.d>0?'+':''}${q.d?.toFixed(2)}</td><td class="${c}">${q.dp>0?'+':''}${q.dp?.toFixed(2)}%</td>`
+      : `<td style="color:var(--amber);font-size:9px;" colspan="2">MKT CLOSED</td>`;
+    return `<tr><td>${l}</td>${priceCell}${changeCell}</tr>`;
   }).join('');
 }
 
