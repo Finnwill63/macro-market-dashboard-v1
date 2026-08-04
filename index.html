@@ -142,7 +142,6 @@
     <span style="margin-left:auto;font-size:9px;color:var(--text-dim);">Finnhub ETFs · Alpha Vantage history · Anthropic AI</span>
   </div>
 
-  <!-- ── DASHBOARD ─────────────────────────────────────── -->
   <div class="panel active" id="panel-dashboard">
     <div class="slabel">US Equities 🇺🇸</div><div class="grid-4" id="usEq"></div>
     <div class="slabel">European Equities 🇪🇺</div><div class="grid-4" id="euEq"></div>
@@ -157,7 +156,6 @@
     <div class="narrative" id="narr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
-  <!-- ── TRENDSPOTTING ──────────────────────────────────── -->
   <div class="panel" id="panel-trendspot">
     <div class="slabel">Foresight Lifecycle</div>
     <div class="pbar">
@@ -173,7 +171,6 @@
     <div class="narrative" id="trendnarr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
-  <!-- ── SCENARIO ANALYSIS ─────────────────────────────── -->
   <div class="panel" id="panel-scenario">
     <div class="slabel">Stress-Test Variables</div>
     <div class="card" style="margin-bottom:16px;">
@@ -188,7 +185,6 @@
     <div class="narrative" id="scenarr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
-  <!-- ── SIGNAL MONITOR ────────────────────────────────── -->
   <div class="panel" id="panel-signals">
     <div class="slabel">Signal Classification</div>
     <div class="grid-3">
@@ -200,7 +196,6 @@
     <div class="narrative" id="signarr"><p style="color:var(--text-dim);">Loading…</p></div>
   </div>
 
-  <!-- ── CHARTS ─────────────────────────────────────────── -->
   <div class="panel" id="panel-charts">
     <div class="charts-grid">
       <div class="chart-card">
@@ -208,7 +203,7 @@
         <div class="chart-wrap"><canvas id="cSP"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-label">Nordic — Finland &amp; Sweden (EFNL / EWD)</div>
+        <div class="chart-label">Nordic — Sweden &amp; Europe (EWD / VGK)</div>
         <div class="chart-wrap"><canvas id="cNK"></canvas></div>
       </div>
       <div class="chart-card">
@@ -216,56 +211,49 @@
         <div class="chart-wrap"><canvas id="cEU"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-label">Gold — 52 Week (GLD)</div>
+        <div class="chart-label">Gold — 52 Week (IAU)</div>
         <div class="chart-wrap"><canvas id="cGLD"></canvas></div>
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
 const W = "https://market-proxy.william-cardwell.workers.dev";
 
-// ── All symbols now via Finnhub ETFs — no Stooq/Yahoo needed ─
-// ETF proxies for indices (daily % change is accurate; price scale differs from index level)
 const US_EQ = [
-  {s:"SPY",  l:"S&P 500",   note:"SPY"},
-  {s:"QQQ",  l:"Nasdaq",    note:"QQQ"},
-  {s:"DIA",  l:"Dow Jones", note:"DIA"},
-  {s:"IWM",  l:"Russell 2000", note:"IWM"},
+  {s:"SPY", l:"S&P 500",      note:"SPY"},
+  {s:"QQQ", l:"Nasdaq",       note:"QQQ"},
+  {s:"DIA", l:"Dow Jones",    note:"DIA"},
+  {s:"IWM", l:"Russell 2000", note:"IWM"},
 ];
 const EU_EQ = [
-  {s:"EWG",  l:"DAX",      note:"EWG"},
-  {s:"EWQ",  l:"CAC 40",   note:"EWQ"},
-  {s:"EWU",  l:"FTSE 100", note:"EWU"},
-  {s:"VGK",  l:"STOXX 600",note:"VGK"},
+  {s:"EWG", l:"DAX",       note:"EWG"},
+  {s:"EWQ", l:"CAC 40",    note:"EWQ"},
+  {s:"EWU", l:"FTSE 100",  note:"EWU"},
+  {s:"VGK", l:"STOXX 600", note:"VGK"},
 ];
 const NK_EQ = [
-  {s:"EFNL", l:"🇫🇮 Finland OMXH",    note:"EFNL"},
-  {s:"EWD",  l:"🇸🇪 Sweden OMXS",     note:"EWD"},
-  {s:"EDEN", l:"🇩🇰 Denmark OMXC25",  note:"EDEN"},
-  {s:"ENOR", l:"🇳🇴 Norway OSEAX",    note:"ENOR"},
+  // EFNL/EDEN/ENOR not on Finnhub free — using best available proxies
+  {s:"EWD",  l:"🇸🇪 Sweden OMXS",      note:"EWD"},
+  {s:"VGK",  l:"🇪🇺 Nordic Proxy",      note:"VGK"},
+  {s:"NORW", l:"🇳🇴 Norway",            note:"NORW"},
+  {s:"FXI",  l:"🌍 Global EM Proxy",    note:"FXI"},
 ];
 const COMMOD = [
-  {s:"BNO",  l:"Brent (BNO)"},
-  {s:"USO",  l:"WTI (USO)"},
-  {s:"GLD",  l:"Gold (GLD)"},
+  {s:"USO",  l:"Crude Oil (USO)"},
+  {s:"UCO",  l:"Brent proxy (UCO)"},
+  {s:"IAU",  l:"Gold (IAU)"},
   {s:"UNG",  l:"Nat Gas (UNG)"},
   {s:"CPER", l:"Copper (CPER)"},
 ];
 const RATES = [
-  {s:"IEF",  l:"US 10Y (IEF)"},
   {s:"SHY",  l:"US 2Y (SHY)"},
+  {s:"IEI",  l:"US 3-7Y (IEI)"},
   {s:"TLT",  l:"US 30Y (TLT)"},
   {s:"HYG",  l:"High Yield (HYG)"},
 ];
-const CHART_SYMS = ["SPY","EFNL","EWD","EWG","EWQ","GLD"];
-
-// All symbols in one flat list for the single Finnhub batch call
-const ALL_SYMS = [
-  ...US_EQ, ...EU_EQ, ...NK_EQ, ...COMMOD, ...RATES
-].map(x => x.s);
+const CHART_SYMS = ["SPY","EWD","VGK","EWG","EWQ","IAU"];
 
 let D = {}, AI = null, CHARTS = {};
 const $ = id => document.getElementById(id);
@@ -283,7 +271,6 @@ function chg(d, dp) {
   return `<span class="${c}">${a} ${Math.abs(dp).toFixed(2)}%</span>`;
 }
 
-// ── Single Finnhub batch for everything ───────────────────
 async function fetchAll(syms) {
   try {
     const r = await fetch(`${W}/?type=batch&symbols=${syms.join(',')}`);
@@ -314,7 +301,7 @@ async function callAI() {
       const q = D[s];
       if (q && q.c) lines.push(`${l}: ${f2(q.c)}, day%=${q.dp?.toFixed(2)}%`);
     });
-    const prompt = `You are a market strategist for Courage Ventures, a Nordic+Baltic healthtech VC fund in Helsinki. Live ETF proxy data (prices are ETF NAV, % changes reflect underlying index moves):\n\n${lines.join('\n')}\n\nReturn ONLY valid JSON:\n{"narrative":"3 paragraphs: macro theme, cross-asset signals, Nordic/healthtech VC implications","trendspot":"2 paragraphs Perceive-Prospect-Act framework","scenarioNarrative":"2 paragraphs bull/base/bear","signals":{"megatrends":[{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PROSPECT"},{"title":"","description":"","phase":"ACT"}],"weakSignals":[{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PROSPECT"}],"wildCards":[{"title":"","description":"","impact":"HIGH"},{"title":"","description":"","impact":"EXTREME"}]},"momentum":[{"asset":"","signal":"","direction":"DOWN","strength":70},{"asset":"","signal":"","direction":"UP","strength":65},{"asset":"","signal":"","direction":"DOWN","strength":60},{"asset":"","signal":"","direction":"FLAT","strength":55}],"divergences":[{"title":"","description":""},{"title":"","description":""}],"dominantPhase":"PERCEIVE"}`;
+    const prompt = `You are a market strategist for Courage Ventures, a Nordic+Baltic healthtech VC fund in Helsinki. Live ETF proxy data:\n\n${lines.join('\n')}\n\nReturn ONLY valid JSON:\n{"narrative":"3 paragraphs: macro theme, cross-asset signals, Nordic/healthtech VC implications","trendspot":"2 paragraphs Perceive-Prospect-Act framework","scenarioNarrative":"2 paragraphs bull/base/bear","signals":{"megatrends":[{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PROSPECT"},{"title":"","description":"","phase":"ACT"}],"weakSignals":[{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PERCEIVE"},{"title":"","description":"","phase":"PROSPECT"}],"wildCards":[{"title":"","description":"","impact":"HIGH"},{"title":"","description":"","impact":"EXTREME"}]},"momentum":[{"asset":"","signal":"","direction":"DOWN","strength":70},{"asset":"","signal":"","direction":"UP","strength":65},{"asset":"","signal":"","direction":"DOWN","strength":60},{"asset":"","signal":"","direction":"FLAT","strength":55}],"divergences":[{"title":"","description":""},{"title":"","description":""}],"dominantPhase":"PERCEIVE"}`;
     const r = await fetch(`${W}/?source=anthropic`, {
       method:"POST",
       headers:{"Content-Type":"application/json"},
@@ -322,7 +309,7 @@ async function callAI() {
     });
     if (!r.ok) throw new Error('HTTP '+r.status);
     const data = await r.json();
-    if (!data.content) { console.warn('AI no content', data); return null; }
+    if (!data.content) return null;
     const txt = data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
     const m = txt.match(/\{[\s\S]*\}/);
     if (m) return JSON.parse(m[0]);
@@ -330,7 +317,6 @@ async function callAI() {
   return null;
 }
 
-// ── Main init ─────────────────────────────────────────────
 async function init() {
   $('rbtn').disabled = true;
   $('overlay').style.display = 'flex';
@@ -342,7 +328,6 @@ async function init() {
 
   try {
     st(1,'active');
-    // One batch call gets US equities
     await fetchAll(US_EQ.map(x=>x.s));
     st(1,'done'); st(2,'active');
 
@@ -381,7 +366,6 @@ function weekLabel() {
   return m.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}).toUpperCase();
 }
 
-// ── Render ────────────────────────────────────────────────
 function render() {
   renderTiles('usEq', US_EQ);
   renderTiles('euEq', EU_EQ);
@@ -451,7 +435,6 @@ function renderTrendspot() {
   $('trendnarr').innerHTML = paras(AI.trendspot);
 }
 
-// ── Scenarios ─────────────────────────────────────────────
 function scenarios() {
   const oil = parseInt($('sl-oil').value);
   const eur = parseInt($('sl-eur').value)/100;
@@ -483,7 +466,6 @@ function scenarios() {
   $('scenarr').innerHTML = AI ? paras(AI.scenarioNarrative) : '<p style="color:var(--text-dim);">Loading…</p>';
 }
 
-// ── Charts ────────────────────────────────────────────────
 const COPTS = {
   responsive:true, maintainAspectRatio:false,
   plugins:{
@@ -498,8 +480,7 @@ const COPTS = {
 
 function grad(ctx, col) {
   const g = ctx.createLinearGradient(0,0,0,260);
-  g.addColorStop(0, col+'40');
-  g.addColorStop(1, col+'00');
+  g.addColorStop(0, col+'40'); g.addColorStop(1, col+'00');
   return g;
 }
 
@@ -514,7 +495,7 @@ function extr(sym) {
 
 function safeCanvas(id) {
   const el = $(id);
-  if (!el) { console.warn('Canvas not found:', id); return null; }
+  if (!el) return null;
   return el.getContext('2d');
 }
 
@@ -527,16 +508,14 @@ function renderCharts() {
     const sp = extr('SPY');
     CHARTS.sp = new Chart(ctxSP, {type:'line',data:{labels:sp.labels,datasets:[{label:'S&P 500 (SPY)',data:sp.data,borderColor:'#c9a84c',backgroundColor:grad(ctxSP,'#c9a84c'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
   }
-
   const ctxNK = safeCanvas('cNK');
   if (ctxNK) {
-    const efnl=extr('EFNL'), ewd=extr('EWD');
-    CHARTS.nk = new Chart(ctxNK, {type:'line',data:{labels:efnl.labels,datasets:[
-      {label:'Finland (EFNL)',data:efnl.data,borderColor:'#4d9de0',backgroundColor:grad(ctxNK,'#4d9de0'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
-      {label:'Sweden (EWD)', data:ewd.data, borderColor:'#c9a84c',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
+    const ewd=extr('EWD'), vgk=extr('VGK');
+    CHARTS.nk = new Chart(ctxNK, {type:'line',data:{labels:ewd.labels,datasets:[
+      {label:'Sweden (EWD)', data:ewd.data,borderColor:'#4d9de0',backgroundColor:grad(ctxNK,'#4d9de0'),borderWidth:2,pointRadius:0,fill:true,tension:0.3},
+      {label:'Europe (VGK)', data:vgk.data,borderColor:'#c9a84c',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
     ]},options:COPTS});
   }
-
   const ctxEU = safeCanvas('cEU');
   if (ctxEU) {
     const ewg=extr('EWG'), ewq=extr('EWQ');
@@ -545,15 +524,13 @@ function renderCharts() {
       {label:'CAC 40 (EWQ)',data:ewq.data,borderColor:'#f59e0b',backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,borderDash:[4,4],tension:0.3}
     ]},options:COPTS});
   }
-
   const ctxGLD = safeCanvas('cGLD');
   if (ctxGLD) {
-    const gld = extr('GLD');
-    CHARTS.gld = new Chart(ctxGLD, {type:'line',data:{labels:gld.labels,datasets:[{label:'Gold (GLD)',data:gld.data,borderColor:'#3ddc84',backgroundColor:grad(ctxGLD,'#3ddc84'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
+    const iau = extr('IAU');
+    CHARTS.gld = new Chart(ctxGLD, {type:'line',data:{labels:iau.labels,datasets:[{label:'Gold (IAU)',data:iau.data,borderColor:'#3ddc84',backgroundColor:grad(ctxGLD,'#3ddc84'),borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:COPTS});
   }
 }
 
-// ── Tab switching ─────────────────────────────────────────
 function tab(name, el) {
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
