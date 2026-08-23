@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-23T11:40:18+00:00",
+  "generated": "2026-08-23T15:06:20+00:00",
   "series": [
     {
       "label": "Copper (CPER)",
@@ -139,21 +139,6 @@
     {
       "label": "Germany (EWG",
       "category": "equities.eu",
-      "last": 44.2,
-      "units": "usd",
-      "chg": {
-        "1d": 0.64,
-        "1w": 0.09,
-        "1m": 7.0,
-        "3m": 3.01,
-        "12m": 5.04
-      },
-      "pctile_5y": 99.4,
-      "stale": false
-    },
-    {
-      "label": "Germany (EWG",
-      "category": "equities.eu",
       "last": 38.165961,
       "units": "eur",
       "chg": {
@@ -164,6 +149,21 @@
         "12m": 5.26
       },
       "pctile_5y": 100.0,
+      "stale": false
+    },
+    {
+      "label": "Germany (EWG",
+      "category": "equities.eu",
+      "last": 44.2,
+      "units": "usd",
+      "chg": {
+        "1d": 0.64,
+        "1w": 0.09,
+        "1m": 7.0,
+        "3m": 3.01,
+        "12m": 5.04
+      },
+      "pctile_5y": 99.4,
       "stale": false
     },
     {
@@ -612,14 +612,14 @@
       "last": 48.94
     },
     {
-      "label": "UK (EWU",
-      "pctile_5y": 100.0,
-      "last": 42.258872
-    },
-    {
       "label": "Germany (EWG",
       "pctile_5y": 100.0,
       "last": 38.165961
+    },
+    {
+      "label": "UK (EWU",
+      "pctile_5y": 100.0,
+      "last": 42.258872
     },
     {
       "label": "Sweden (MSCI proxy",
@@ -662,6 +662,11 @@
       "last": 299.95999
     },
     {
+      "label": "S&P 500",
+      "pctile_5y": 99.0,
+      "last": 7674.37
+    },
+    {
       "label": "Dow Jones",
       "pctile_5y": 99.0,
       "last": 53277.01
@@ -672,24 +677,19 @@
       "last": 39.99
     },
     {
-      "label": "S&P 500",
-      "pctile_5y": 99.0,
-      "last": 7674.37
-    },
-    {
       "label": "France (EWQ",
       "pctile_5y": 98.9,
       "last": 40.583715
     },
     {
-      "label": "Finland (MSCI proxy",
-      "pctile_5y": 98.3,
-      "last": 47.249806
-    },
-    {
       "label": "France (EWQ",
       "pctile_5y": 98.3,
       "last": 47.0
+    },
+    {
+      "label": "Finland (MSCI proxy",
+      "pctile_5y": 98.3,
+      "last": 47.249806
     },
     {
       "label": "Norway (MSCI proxy",
