@@ -1,0 +1,107 @@
+# scenario-spec.yaml — v0.2 (percentile bands)
+#
+# Scenarios defined as percentile positions of named drivers within their own
+# history, so the dashboard states which scenario the data sits in, and how
+# far each driver is from flipping. The AI panel narrates this; it does not
+# decide it.
+#
+# Bands are relative to the driver's own distribution, NOT to absolutes.
+# See the limitation note at the bottom before trusting this too far.
+
+banding:
+  mode: percentile
+  window_years: 10          # use the longest history available
+  min_window_years: 3       # below this, report "insufficient history"
+  thresholds:
+    low: 20                 # <=20th percentile
+    high: 80                # >=80th percentile
+  # direction says which tail is bullish FOR VENTURE VALUATIONS.
+  # "bull" here means good for marks and exits, not good for the economy.
+
+drivers:
+
+  cost_of_capital:
+    label: Cost of capital
+    measure: {type: level, series: rate_us_10y}
+    alongside: [rate_ecb_depo]
+    units: percent
+    higher_is: bear
+    bears_on: [Q1 valuations, Q7 Finland risk premium, Q8 deep tech marks]
+
+  risk_appetite:
+    label: Credit risk appetite
+    measure: {type: level, series: rate_us_baa_spread}
+    alongside: [rate_us_hy_spread]
+    units: percent
+    higher_is: bear
+    note: >
+      Best early warning in this set. HY spreads widen before private
+      rounds reprice, typically by one to two quarters.
+    bears_on: [Q1 valuations, Q2 board runway, Q6 LP allocation]
+
+  exit_window:
+    label: Exit window
+    measure: {type: change, series: eq_us_nasdaq, horizon: 12m}
+    units: percent
+    higher_is: bull
+    weak: true
+    note: >
+      Public tech 12m change is a crude proxy for exit appetite. Replace
+      with IPO count or M&A volume when a free source is found.
+    bears_on: [Q1 valuations, Q5 US move timing, Q6 LP allocation]
+
+  finland_risk_pricing:
+    label: Finland risk pricing
+    measure: {type: spread, series: rate_fi_10y, minus: rate_de_10y, scale: 100}
+    units: basis_points
+    higher_is: bear
+    note: >
+      The most claim-specific series in the set and not currently on the
+      dashboard. Directly the Damodaran question.
+    bears_on: [Q7 risk premium, Q10 social model financeability]
+
+  european_growth:
+    label: European and Finnish growth
+    measure: {type: change, series: eq_nordic_finland_eur, horizon: 3m}
+    alongside: [eq_eu_stoxx600_eur, cmd_copper]
+    units: percent
+    higher_is: bull
+    bears_on: [Q8 deep tech valuations, Q9 spinout investability]
+
+  corridor_fx:
+    label: Nordics-India corridor
+    measure: {type: change, series: fx_eur_inr, horizon: 12m}
+    alongside: [fx_eur_usd]
+    units: percent
+    higher_is: bull        # stronger EUR vs INR = cheaper India expansion
+    bears_on: [Q4 India entry cost]
+
+required_additions:
+  - {id: rate_ecb_depo, provider: ecb_sdw, key: "FM/D.U2.EUR.4F.KR.DFR.LEV"}
+  - {id: rate_de_10y,   provider: fred, series_id: IRLTLT01DEM156N}
+  - {id: rate_fi_10y,   provider: fred, series_id: IRLTLT01FIM156N}
+  - {id: fx_eur_usd,    provider: fred, series_id: DEXUSEU}
+  - {id: fx_eur_inr,    provider: ecb_sdw, key: "EXR/D.INR.EUR.SP00.A"}
+
+output_contract:
+  current_state: per-driver band, percentile, value, and distance to the
+                 nearest threshold in native units
+  scenario_mix:  count of drivers per band
+  flip_watch:    the two drivers closest to crossing
+  narrative:     model writes around the computed state and may not
+                 contradict it
+
+# --------------------------------------------------------------- LIMITATION
+# Percentile bands measure "unusual versus recent history", not "bad".
+# In a regime shift the distribution drifts with the data, so a driver can
+# never stay bear for long — after two years at a high level, that level
+# becomes the new median and the band silently resets to base.
+#
+# Mitigations in use:
+#   - 10y window rather than 5y, so 2021-2022 stays in the sample
+#   - absolute_override below, for drivers where you do have a real view
+#
+# Fill an override when a level means something regardless of history.
+absolute_override:
+  # risk_appetite: {bear_above: 5.0}
+  # finland_risk_pricing: {bear_above: 80}

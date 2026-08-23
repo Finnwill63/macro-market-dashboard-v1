@@ -1,0 +1,144 @@
+# macro-market-dashboard — series manifest v0.3
+#
+# v0.3 replaces the dead scraped sources. Stooq now sits behind a JavaScript
+# proof-of-work wall, Finnhub moved candles to a paid tier, and Yahoo blocks
+# scripted requests at the edge. Equities now come from Twelve Data's free
+# tier as US-listed ETFs, with FRED's monthly OECD share-price series as a
+# stale-but-present fallback.
+#
+# Providers:
+#   fred        keyless
+#   ecb_sdw     keyless
+#   twelvedata  needs TD_KEY; 8 requests/minute, paced by the fetcher
+#
+# European equity ETFs are USD-denominated, so each has a derived EUR series.
+# Track both: the gap between them is the currency contribution.
+
+meta:
+  version: 0.3
+  updated: 2026-08-23
+  verified: "all fred/ecb series and 8 twelvedata symbols returned live data 23 Aug 2026"
+
+defaults:
+  cadence: weekday
+  history_years: 10
+  fallback_policy: last_good_value
+
+series:
+
+# ------------------------------------------------------------------- rates
+  - {id: rate_us_2y, label: US 2Y Treasury yield, category: rates, units: percent,
+     primary: {provider: fred, series_id: DGS2}, drivers: [], claims: []}
+  - {id: rate_us_10y, label: US 10Y Treasury yield, category: rates, units: percent,
+     primary: {provider: fred, series_id: DGS10}, drivers: [], claims: [Q1, Q7, Q8]}
+  - {id: rate_us_30y, label: US 30Y Treasury yield, category: rates, units: percent,
+     primary: {provider: fred, series_id: DGS30}, drivers: [], claims: []}
+  - {id: rate_us_hy_spread, label: US High Yield OAS, category: rates, units: percent,
+     primary: {provider: fred, series_id: BAMLH0A0HYM2}, drivers: [], claims: [Q1, Q2, Q6]}
+  - {id: rate_us_curve_10y2y, label: US 10Y-2Y spread, category: rates, units: percent,
+     primary: {provider: fred, series_id: T10Y2Y}, drivers: [], claims: []}
+  - {id: rate_ecb_depo, label: ECB deposit facility rate, category: rates, units: percent,
+     primary: {provider: ecb_sdw, key: "FM/D.U2.EUR.4F.KR.DFR.LEV"}, drivers: [], claims: [Q1, Q7]}
+  - {id: rate_fi_10y, label: Finland 10Y government bond yield, category: rates,
+     units: percent, cadence: monthly, note: "monthly OECD series; no free daily source",
+     primary: {provider: fred, series_id: IRLTLT01FIM156N}, drivers: [], claims: [Q7, Q10]}
+  - {id: rate_de_10y, label: Germany 10Y government bond yield, category: rates,
+     units: percent, cadence: monthly,
+     primary: {provider: fred, series_id: IRLTLT01DEM156N}, drivers: [], claims: [Q7, Q10]}
+
+# ------------------------------------------------------- equities.us (FRED)
+  - {id: eq_us_sp500, label: S&P 500, category: equities.us, units: index,
+     primary: {provider: fred, series_id: SP500}, drivers: [], claims: []}
+  - {id: eq_us_nasdaq, label: Nasdaq 100, category: equities.us, units: index,
+     primary: {provider: fred, series_id: NASDAQ100}, drivers: [], claims: [Q1, Q5, Q6]}
+  - {id: eq_us_nasdaq_comp, label: Nasdaq Composite, category: equities.us, units: index,
+     primary: {provider: fred, series_id: NASDAQCOM}, drivers: [], claims: []}
+  - {id: eq_us_dow, label: Dow Jones, category: equities.us, units: index,
+     primary: {provider: fred, series_id: DJIA}, drivers: [], claims: []}
+  - {id: eq_us_russell2000, label: Russell 2000 (IWM), category: equities.us, units: usd,
+     note: "ETF proxy — FRED discontinued RU2000PR",
+     primary: {provider: twelvedata, symbol: IWM}, drivers: [], claims: []}
+  - {id: vol_vix, label: VIX, category: volatility, units: index,
+     primary: {provider: fred, series_id: VIXCLS}, drivers: [], claims: []}
+
+# ------------------------------------- equities.europe (Twelve Data ETFs, USD)
+  - {id: eq_eu_stoxx600_usd, label: Euro area (EZU, USD), category: equities.eu, units: usd,
+     primary: {provider: twelvedata, symbol: EZU},
+     fallback: {provider: fred, series_id: SPASTT01EZM661N}, drivers: [], claims: [Q8]}
+  - {id: eq_eu_dax_usd, label: Germany (EWG, USD), category: equities.eu, units: usd,
+     primary: {provider: twelvedata, symbol: EWG},
+     fallback: {provider: fred, series_id: SPASTT01DEM661N}, drivers: [], claims: []}
+  - {id: eq_eu_cac40_usd, label: France (EWQ, USD), category: equities.eu, units: usd,
+     primary: {provider: twelvedata, symbol: EWQ},
+     fallback: {provider: fred, series_id: SPASTT01FRM661N}, drivers: [], claims: []}
+  - {id: eq_eu_ftse100_usd, label: UK (EWU, USD), category: equities.eu, units: usd,
+     primary: {provider: twelvedata, symbol: EWU},
+     fallback: {provider: fred, series_id: SPASTT01GBM661N}, drivers: [], claims: []}
+
+# ------------------------------------- equities.nordic (Twelve Data ETFs, USD)
+  - {id: eq_nordic_finland_usd, label: Finland (EFNL, USD), category: equities.nordic,
+     units: usd, note: "iShares MSCI Finland — not OMXH25; different constituents",
+     primary: {provider: twelvedata, symbol: EFNL},
+     fallback: {provider: fred, series_id: SPASTT01FIM661N}, drivers: [], claims: [Q8, Q9]}
+  - {id: eq_nordic_denmark_usd, label: Denmark (EDEN, USD), category: equities.nordic,
+     units: usd, primary: {provider: twelvedata, symbol: EDEN},
+     fallback: {provider: fred, series_id: SPASTT01DKM661N}, drivers: [], claims: []}
+  - {id: eq_nordic_norway_usd, label: Norway (ENOR, USD), category: equities.nordic,
+     units: usd, primary: {provider: twelvedata, symbol: ENOR},
+     fallback: {provider: fred, series_id: SPASTT01NOM661N}, drivers: [], claims: []}
+  - {id: eq_nordic_sweden_usd, label: Sweden (EWD, USD), category: equities.nordic,
+     units: usd, primary: {provider: twelvedata, symbol: EWD},
+     fallback: {provider: fred, series_id: SPASTT01SEM661N}, drivers: [], claims: []}
+
+# --------------------------------------------------------------- commodities
+  - {id: cmd_crude_brent, label: Crude Oil (Brent), category: commodities, units: usd,
+     primary: {provider: fred, series_id: DCOILBRENTEU}, drivers: [], claims: []}
+  - {id: cmd_crude_wti, label: Crude Oil (WTI), category: commodities, units: usd,
+     primary: {provider: fred, series_id: DCOILWTICO}, drivers: [], claims: []}
+  - {id: cmd_natgas, label: Natural Gas (Henry Hub), category: commodities, units: usd,
+     primary: {provider: fred, series_id: DHHNGSP}, drivers: [], claims: []}
+  - {id: cmd_gold, label: Gold (GLD), category: commodities, units: usd,
+     note: "untested symbol — rate limit hit before verification",
+     primary: {provider: twelvedata, symbol: GLD}, drivers: [], claims: []}
+  - {id: cmd_copper, label: Copper (CPER), category: commodities, units: usd,
+     note: "untested symbol — rate limit hit before verification",
+     primary: {provider: twelvedata, symbol: CPER},
+     fallback: {provider: fred, series_id: PCOPPUSDM}, drivers: [], claims: [Q8]}
+
+# ------------------------------------------------------------------------ fx
+  - {id: fx_eur_usd, label: EUR/USD, category: fx, units: rate,
+     primary: {provider: fred, series_id: DEXUSEU}, drivers: [], claims: [Q5, Q6]}
+  - {id: fx_eur_inr, label: EUR/INR, category: fx, units: rate,
+     primary: {provider: ecb_sdw, key: "EXR/D.INR.EUR.SP00.A"}, drivers: [], claims: [Q4]}
+  - {id: fx_eur_sek, label: EUR/SEK, category: fx, units: rate,
+     primary: {provider: ecb_sdw, key: "EXR/D.SEK.EUR.SP00.A"}, drivers: [], claims: []}
+
+# --------------------------------------------------------------------- derived
+# EUR-terms equity series. USD price / (USD per EUR) = EUR price.
+# No extra API calls — computed from series already fetched above.
+derived:
+  - {id: eq_nordic_finland_eur, from: eq_nordic_finland_usd, using: fx_eur_usd,
+     label: Finland (MSCI proxy, EUR), category: equities.nordic, units: eur,
+     note: "EFNL adjusted to EUR — strips the currency effect from the USD ETF",
+     claims: [Q8, Q9]}
+  - {id: eq_nordic_denmark_eur, from: eq_nordic_denmark_usd, using: fx_eur_usd,
+     label: Denmark (MSCI proxy, EUR), category: equities.nordic, units: eur}
+  - {id: eq_nordic_norway_eur, from: eq_nordic_norway_usd, using: fx_eur_usd,
+     label: Norway (MSCI proxy, EUR), category: equities.nordic, units: eur}
+  - {id: eq_nordic_sweden_eur, from: eq_nordic_sweden_usd, using: fx_eur_usd,
+     label: Sweden (MSCI proxy, EUR), category: equities.nordic, units: eur}
+  - {id: eq_eu_stoxx600_eur, from: eq_eu_stoxx600_usd, using: fx_eur_usd,
+     label: Euro area (EZU, EUR), category: equities.eu, units: eur, claims: [Q8]}
+  - {id: eq_eu_dax_eur, from: eq_eu_dax_usd, using: fx_eur_usd,
+     label: Germany (EWG, EUR), category: equities.eu, units: eur}
+  - {id: eq_eu_cac40_eur, from: eq_eu_cac40_usd, using: fx_eur_usd,
+     label: France (EWQ, EUR), category: equities.eu, units: eur}
+  - {id: eq_eu_ftse100_eur, from: eq_eu_ftse100_usd, using: fx_eur_usd,
+     label: UK (EWU, EUR), category: equities.eu, units: eur}
+
+ai_analysis:
+  model: claude-sonnet-4-6
+  persona: "market strategist advising a Helsinki-based investor in Nordic-Baltic seed-stage companies"
+  input: data/ai_context.json + data/scenario_state.json
+  contract: must cite series and horizon; may not contradict computed bands;
+            must return "no signal found" rather than fill a section

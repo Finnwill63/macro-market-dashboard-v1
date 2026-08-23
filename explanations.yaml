@@ -1,0 +1,165 @@
+# explanations.yaml
+#
+# Plain-language explanations, keyed by driver name or series id. The pipeline
+# attaches these to the JSON; the page renders them behind a tap or hover.
+# Kept separate from the manifest on purpose: prose belongs with prose, and this
+# file can be edited freely without any risk to the plumbing.
+#
+# Driver entries have three parts — what / means / watch. Series entries are one
+# sentence. Anything without an entry simply shows no explanation; nothing breaks.
+
+method: 'Every number is scored against its own history rather than an absolute threshold.
+  "p98.8" means today sits higher than 98.8% of the last ten years of that same series. The
+  bands are the top and bottom fifth of that range. The known limitation: if a level persists
+  for years it becomes the new normal and the band quietly resets, so no driver can stay bear
+  indefinitely.
+
+  '
+
+drivers:
+  cost_of_capital:
+    what: The US 10-year Treasury yield, from FRED (DGS10), scored as a level against its
+      own ten-year distribution. The ECB deposit rate is shown alongside for the European
+      picture.
+    means: This is the reference rate almost every other asset is priced against. When it
+      rises, future cash flows are discounted harder — and the assets hurt most are the ones
+      whose value sits furthest out, which is exactly what early-stage equity is. A high reading
+      works against valuations, exit timing and LP appetite simultaneously.
+    watch: Inflation surprises and central bank guidance move it. A sustained 50bp move in
+      either direction shifts the band. Falling below roughly 3.5% would take it out of bear
+      territory.
+  risk_appetite:
+    what: Moody's Baa corporate bond yield minus the 10-year Treasury (FRED BAA10Y), scored
+      as a level. High-yield spreads are displayed alongside but not scored — FRED only serves
+      three years of that series, which is too short for a percentile.
+    means: 'What lenders charge for taking corporate credit risk. This is the earliest warning
+      in the set: credit spreads typically widen one to two quarters before private rounds
+      reprice, so it moves before anything visible in your own deal flow. Low means lenders
+      are relaxed and capital is available.'
+    watch: Widens on default fears, banking stress or a growth scare. Worth pinning an absolute
+      floor here — above 3% has historically meant real stress regardless of where the ten-year
+      distribution sits.
+  exit_window:
+    what: Nasdaq 100's twelve-month change (FRED NASDAQ100), scored against the distribution
+      of that same rolling change. Flagged in the config as a weak proxy.
+    means: A rough stand-in for appetite to buy or list technology companies. When public
+      tech multiples are strong, acquirers are more confident and the IPO window tends to
+      be open — but this measures prices, not transactions.
+    watch: Replace it. The honest version would be IPO counts or M&A volume; no free source
+      for either has been found yet. Until then, treat a strong reading as permission to look
+      rather than evidence the window is open.
+  finland_risk_pricing:
+    what: Finland's 10-year government bond yield minus Germany's (FRED IRLTLT01FIM156N and
+      IRLTLT01DEM156N), expressed in basis points. Both legs are monthly OECD series — no
+      free daily source exists for either.
+    means: The market's price for lending to Finland rather than to the euro area's safest
+      borrower. This is the cleanest public read on Finnish country risk, and the series most
+      directly connected to the Damodaran work. Wider means investors demand more compensation
+      to hold Finnish exposure.
+    watch: Sovereign rating actions, fiscal announcements and euro-area stress all move it.
+      Because it is monthly, it moves twelve times a year — useful for "since the spring",
+      useless for "this week". Note that a stable spread can hide both yields rising together,
+      which is what is happening now.
+  european_growth:
+    what: Three-month change in the MSCI Finland ETF (EFNL), converted from dollars into euros
+      using EUR/USD so the currency effect is stripped out. Euro-area equities and copper
+      are shown alongside as corroboration.
+    means: A rough read on Finnish corporate conditions, and on the pool your spinouts and
+      portfolio companies are growing in. When it is weak while Europe holds up, the problem
+      is domestic rather than continental.
+    watch: 'The proxy is imperfect — MSCI Finland is not OMXH25, with different constituents
+      and weights. Compare the EUR and USD versions of this series directly: the gap between
+      them is pure currency, not Finnish companies.'
+  corridor_fx:
+    what: Twelve-month change in EUR/INR from the ECB's daily reference rates, scored against
+      its own distribution.
+    means: The exchange rate the Nordics-India corridor runs on. A stronger euro makes Indian
+      expansion cheaper to fund from Europe, but shrinks the euro value of revenue earned
+      in India. Which direction helps depends entirely on where a company sits in that journey
+      — pre-revenue expansion or repatriating earnings.
+    watch: Currently near the top of its five-year range, meaning the euro is historically
+      strong against the rupee. Good for funding entry now; a headwind later if it holds when
+      revenue starts coming back.
+
+series:
+  rate_us_2y: Two-year Treasury yield — tracks where the market expects the Fed to be in the
+    near term.
+  rate_us_10y: Ten-year Treasury yield — the global reference rate for discounting long-dated
+    cash flows.
+  rate_us_30y: Thirty-year Treasury yield — the long end, driven by inflation expectations
+    and term premium more than by policy.
+  rate_us_curve_10y2y: 'Ten-year yield minus two-year. Negative (inverted) has historically
+    preceded recessions; positive is the normal state.
+
+    '
+  rate_us_hy_spread: 'High-yield credit spread — the most sensitive stress gauge here, but
+    FRED serves only three years of it, so it is displayed rather than scored.
+
+    '
+  rate_us_baa_spread: 'Investment-grade credit spread, with four decades of history. Less
+    twitchy than high yield, which is why the credit driver is scored off this one.
+
+    '
+  rate_ecb_depo: The ECB's deposit facility rate — the euro area's policy rate and the anchor
+    for European borrowing costs.
+  rate_fi_10y: Finland's ten-year government borrowing cost. Monthly series; no free daily
+    source exists.
+  rate_de_10y: Germany's ten-year Bund yield — the euro area's risk-free benchmark. Monthly
+    series.
+  vol_vix: Implied volatility on US equity options. Rises when investors pay up for protection
+    — the standard fear gauge.
+  eq_us_sp500: S&P 500 — broad US large-cap equities.
+  eq_us_nasdaq: Nasdaq 100 — US large-cap technology, the closest public comparable to venture-backed
+    software.
+  eq_us_nasdaq_comp: Nasdaq Composite — wider than the 100, including smaller listed technology
+    names.
+  eq_us_dow: Dow Jones Industrial Average — thirty US industrials, the least useful index
+    here but widely quoted.
+  eq_us_russell2000: 'Russell 2000 via the IWM ETF — US small caps, more sensitive to domestic
+    credit conditions than large caps are.
+
+    '
+  eq_nordic_finland_usd: 'iShares MSCI Finland, priced in dollars. Not OMXH25 — different
+    constituents and weights — but the only daily Finland series available free.
+
+    '
+  eq_nordic_finland_eur: 'The same Finland fund converted into euros. Compare it with the
+    dollar version: the gap between the two is pure currency effect, not Finnish companies.
+
+    '
+  eq_nordic_denmark_usd: iShares MSCI Denmark in dollars — heavily weighted toward a small
+    number of large pharma names.
+  eq_nordic_denmark_eur: MSCI Denmark in euro terms, with the dollar effect removed.
+  eq_nordic_norway_usd: iShares MSCI Norway in dollars — energy-heavy, so it tracks oil more
+    than the rest of the Nordics.
+  eq_nordic_norway_eur: MSCI Norway in euro terms.
+  eq_nordic_sweden_usd: iShares MSCI Sweden in dollars — the largest and most industrial of
+    the Nordic markets.
+  eq_nordic_sweden_eur: MSCI Sweden in euro terms.
+  eq_eu_stoxx600_usd: Euro-area equities via the EZU ETF, priced in dollars.
+  eq_eu_stoxx600_eur: The same euro-area fund in euro terms, dollar effect removed.
+  eq_eu_dax_usd: German equities via EWG, in dollars.
+  eq_eu_dax_eur: German equities in euro terms.
+  eq_eu_cac40_usd: French equities via EWQ, in dollars.
+  eq_eu_cac40_eur: French equities in euro terms.
+  eq_eu_ftse100_usd: UK equities via EWU, in dollars — note the FTSE earns most of its revenue
+    outside Britain.
+  eq_eu_ftse100_eur: UK equities in euro terms.
+  cmd_copper: Copper — traditionally a read on industrial demand and global growth.
+  cmd_gold: 'Gold — a read on fear, real rates and currency debasement. Copper rising while
+    gold falls suggests growth; the reverse suggests fear.
+
+    '
+  cmd_crude_brent: Brent crude — the European energy input cost, and a live variable for Finnish
+    industry.
+  cmd_crude_wti: West Texas Intermediate — the US oil benchmark. The gap to Brent reflects
+    transport and regional supply.
+  cmd_natgas: Henry Hub natural gas — the US benchmark, less relevant to European energy costs
+    than it once was.
+  fx_eur_usd: 'Euro against the dollar. Also the conversion rate behind every EUR-adjusted
+    equity series on this page.
+
+    '
+  fx_eur_inr: Euro against the Indian rupee — the exchange rate the Nordics-India corridor
+    runs on.
+  fx_eur_sek: Euro against the Swedish krona — relevant to Nordic cross-border comparisons.

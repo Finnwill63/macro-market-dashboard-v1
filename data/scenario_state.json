@@ -1,0 +1,194 @@
+{
+  "generated": "2026-08-23T11:40:18+00:00",
+  "method": "percentile bands, 10y window, 20/80 cuts",
+  "mix": {
+    "bull": 1,
+    "base": 4,
+    "bear": 1
+  },
+  "headline": "4 base, 1 bear, 1 bull",
+  "flip_watch": [
+    {
+      "driver": "Credit risk appetite",
+      "band": "bull",
+      "value": 1.64,
+      "units": "percent",
+      "to_bear": 0.61
+    },
+    {
+      "driver": "European and Finnish growth",
+      "band": "base",
+      "value": -3.377,
+      "units": "percent",
+      "to_bear": 1.096
+    }
+  ],
+  "drivers": [
+    {
+      "driver": "cost_of_capital",
+      "label": "Cost of capital",
+      "units": "percent",
+      "weak": false,
+      "bears_on": [
+        "Q1 valuations",
+        "Q7 Finland risk premium",
+        "Q8 deep tech marks"
+      ],
+      "explain": {
+        "what": "The US 10-year Treasury yield, from FRED (DGS10), scored as a level against its own ten-year distribution. The ECB deposit rate is shown alongside for the European picture.",
+        "means": "This is the reference rate almost every other asset is priced against. When it rises, future cash flows are discounted harder \u2014 and the assets hurt most are the ones whose value sits furthest out, which is exactly what early-stage equity is. A high reading works against valuations, exit timing and LP appetite simultaneously.",
+        "watch": "Inflation surprises and central bank guidance move it. A sustained 50bp move in either direction shifts the band. Falling below roughly 3.5% would take it out of bear territory."
+      },
+      "value": 4.69,
+      "percentile": 98.8,
+      "band": "bear",
+      "override_applied": false,
+      "window_years": 10.0,
+      "edges": {
+        "bear_at": 4.21,
+        "bull_at": 1.64
+      },
+      "distance_to_bear": 0.48,
+      "distance_to_bull": 3.05,
+      "as_of": "2026-08-20"
+    },
+    {
+      "driver": "risk_appetite",
+      "label": "Credit risk appetite",
+      "units": "percent",
+      "weak": false,
+      "bears_on": [
+        "Q1 valuations",
+        "Q2 board runway",
+        "Q6 LP allocation"
+      ],
+      "explain": {
+        "what": "Moody's Baa corporate bond yield minus the 10-year Treasury (FRED BAA10Y), scored as a level. High-yield spreads are displayed alongside but not scored \u2014 FRED only serves three years of that series, which is too short for a percentile.",
+        "means": "What lenders charge for taking corporate credit risk. This is the earliest warning in the set: credit spreads typically widen one to two quarters before private rounds reprice, so it moves before anything visible in your own deal flow. Low means lenders are relaxed and capital is available.",
+        "watch": "Widens on default fears, banking stress or a growth scare. Worth pinning an absolute floor here \u2014 above 3% has historically meant real stress regardless of where the ten-year distribution sits."
+      },
+      "value": 1.64,
+      "percentile": 14.5,
+      "band": "bull",
+      "override_applied": false,
+      "window_years": 10.0,
+      "edges": {
+        "bear_at": 2.25,
+        "bull_at": 1.7
+      },
+      "distance_to_bear": 0.61,
+      "distance_to_bull": 0.06,
+      "as_of": "2026-08-20"
+    },
+    {
+      "driver": "exit_window",
+      "label": "Exit window",
+      "units": "percent",
+      "weak": true,
+      "bears_on": [
+        "Q1 valuations",
+        "Q5 US move timing",
+        "Q6 LP allocation"
+      ],
+      "explain": {
+        "what": "Nasdaq 100's twelve-month change (FRED NASDAQ100), scored against the distribution of that same rolling change. Flagged in the config as a weak proxy.",
+        "means": "A rough stand-in for appetite to buy or list technology companies. When public tech multiples are strong, acquirers are more confident and the IPO window tends to be open \u2014 but this measures prices, not transactions.",
+        "watch": "Replace it. The honest version would be IPO counts or M&A volume; no free source for either has been found yet. Until then, treat a strong reading as permission to look rather than evidence the window is open."
+      },
+      "value": 26.645,
+      "percentile": 56.3,
+      "band": "base",
+      "override_applied": false,
+      "window_years": 9.0,
+      "edges": {
+        "bear_at": 6.102,
+        "bull_at": 36.93
+      },
+      "distance_to_bear": 20.542,
+      "distance_to_bull": 10.285,
+      "as_of": "2026-08-21"
+    },
+    {
+      "driver": "finland_risk_pricing",
+      "label": "Finland risk pricing",
+      "units": "basis_points",
+      "weak": false,
+      "bears_on": [
+        "Q7 risk premium",
+        "Q10 social model financeability"
+      ],
+      "explain": {
+        "what": "Finland's 10-year government bond yield minus Germany's (FRED IRLTLT01FIM156N and IRLTLT01DEM156N), expressed in basis points. Both legs are monthly OECD series \u2014 no free daily source exists for either.",
+        "means": "The market's price for lending to Finland rather than to the euro area's safest borrower. This is the cleanest public read on Finnish country risk, and the series most directly connected to the Damodaran work. Wider means investors demand more compensation to hold Finnish exposure.",
+        "watch": "Sovereign rating actions, fiscal announcements and euro-area stress all move it. Because it is monthly, it moves twelve times a year \u2014 useful for \"since the spring\", useless for \"this week\". Note that a stable spread can hide both yields rising together, which is what is happening now."
+      },
+      "value": 34.073,
+      "percentile": 47.5,
+      "band": "base",
+      "override_applied": false,
+      "window_years": 9.7,
+      "edges": {
+        "bear_at": 53.338,
+        "bull_at": 24.45
+      },
+      "distance_to_bear": 19.264,
+      "distance_to_bull": 9.623,
+      "as_of": "2026-06-01"
+    },
+    {
+      "driver": "european_growth",
+      "label": "European and Finnish growth",
+      "units": "percent",
+      "weak": false,
+      "bears_on": [
+        "Q8 deep tech valuations",
+        "Q9 spinout investability"
+      ],
+      "explain": {
+        "what": "Three-month change in the MSCI Finland ETF (EFNL), converted from dollars into euros using EUR/USD so the currency effect is stripped out. Euro-area equities and copper are shown alongside as corroboration.",
+        "means": "A rough read on Finnish corporate conditions, and on the pool your spinouts and portfolio companies are growing in. When it is weak while Europe holds up, the problem is domestic rather than continental.",
+        "watch": "The proxy is imperfect \u2014 MSCI Finland is not OMXH25, with different constituents and weights. Compare the EUR and USD versions of this series directly: the gap between them is pure currency, not Finnish companies."
+      },
+      "value": -3.377,
+      "percentile": 25.2,
+      "band": "base",
+      "override_applied": false,
+      "window_years": 9.7,
+      "edges": {
+        "bear_at": -4.473,
+        "bull_at": 7.604
+      },
+      "distance_to_bear": 1.096,
+      "distance_to_bull": 10.981,
+      "as_of": "2026-08-21"
+    },
+    {
+      "driver": "corridor_fx",
+      "label": "Nordics-India corridor",
+      "units": "percent",
+      "weak": false,
+      "bears_on": [
+        "Q4 India entry cost"
+      ],
+      "explain": {
+        "what": "Twelve-month change in EUR/INR from the ECB's daily reference rates, scored against its own distribution.",
+        "means": "The exchange rate the Nordics-India corridor runs on. A stronger euro makes Indian expansion cheaper to fund from Europe, but shrinks the euro value of revenue earned in India. Which direction helps depends entirely on where a company sits in that journey \u2014 pre-revenue expansion or repatriating earnings.",
+        "watch": "Currently near the top of its five-year range, meaning the euro is historically strong against the rupee. Good for funding entry now; a headwind later if it holds when revenue starts coming back."
+      },
+      "value": 10.233,
+      "percentile": 75.3,
+      "band": "base",
+      "override_applied": false,
+      "window_years": 9.0,
+      "edges": {
+        "bear_at": -2.05,
+        "bull_at": 11.038
+      },
+      "distance_to_bear": 12.283,
+      "distance_to_bull": 0.805,
+      "as_of": "2026-08-21"
+    }
+  ],
+  "how_to_read": "Every number is scored against its own history rather than an absolute threshold. \"p98.8\" means today sits higher than 98.8% of the last ten years of that same series. The bands are the top and bottom fifth of that range. The known limitation: if a level persists for years it becomes the new normal and the band quietly resets, so no driver can stay bear indefinitely.\n",
+  "caveat": "Bands are relative to each driver's own history over the window. They indicate unusual versus recent, not good versus bad. Drivers with an absolute override applied are flagged."
+}

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scenario Console — Will Cardwell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=DM+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet">
+<style>
+/* ---- dark (default) ---- */
+:root{
+  --ink:#0e1116; --panel:#141922; --panel2:#1a2029; --line:#242c38;
+  --text:#dfe4ec; --mute:#8b96a8; --faint:#6b7688;
+  --bear:#c2593f; --bull:#3f9a82; --gold:#c9a84c;
+  --railbg:#1b212b; --railtick:#3b4553; --marker:#c3ccda;
+  --mono:'DM Mono',ui-monospace,Menlo,monospace;
+  --disp:'Archivo',system-ui,sans-serif;
+  --serif:'Newsreader',Georgia,serif;
+}
+/* ---- light ---- */
+html[data-theme="light"]{
+  --ink:#fbfaf7; --panel:#ffffff; --panel2:#f4f2ed; --line:#ddd8cf;
+  --text:#1b1f26; --mute:#5c6472; --faint:#7a8291;
+  --bear:#a8402a; --bull:#2b7563; --gold:#8a6d17;
+  --railbg:#e8e4dc; --railtick:#b3aca0; --marker:#3a424f;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--text)}
+body{font-family:var(--mono);font-size:14.5px;line-height:1.55;padding-bottom:64px;
+     -webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2{font-family:var(--disp);margin:0;letter-spacing:-.02em}
+.eyebrow{font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
+
+.freshness{border-bottom:1px solid var(--line);background:var(--panel);
+           font-size:13px;padding:10px 0;color:var(--mute)}
+.freshness .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.dot.ok{background:var(--bull)} .dot.warn{background:var(--gold)}
+.freshness b{color:var(--text);font-weight:500}
+
+header.top{padding:34px 0 22px;border-bottom:1px solid var(--line);
+           display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+header.top h1{font-size:27px;font-weight:700;margin-top:6px}
+header.top .sub{color:var(--mute);font-size:13px;margin-top:6px}
+.themebtn{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+          background:none;border:1px solid var(--line);color:var(--mute);border-radius:3px;
+          padding:7px 12px;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.themebtn:hover{color:var(--gold);border-color:var(--gold)}
+
+.state{padding:30px 0 6px}
+.barcode{display:grid;gap:4px;margin:14px 0 16px}
+.cell{height:54px;border-radius:2px;position:relative;overflow:hidden;
+      border:1px solid var(--line)}
+.cell span{position:absolute;left:8px;bottom:7px;font-size:10.5px;letter-spacing:.05em;
+           text-transform:uppercase;color:#fff;opacity:.85}
+html[data-theme="light"] .cell span{color:#fff;opacity:.95}
+.cell.bear{background:linear-gradient(180deg,#2a1712,var(--bear))}
+.cell.base{background:linear-gradient(180deg,#171c24,#39424f)}
+.cell.bull{background:linear-gradient(180deg,#0f221e,var(--bull))}
+.cell.none{background:repeating-linear-gradient(45deg,#171c24,#171c24 6px,#1d232c 6px,#1d232c 12px)}
+html[data-theme="light"] .cell.base{background:linear-gradient(180deg,#8d97a6,#5c6472)}
+html[data-theme="light"] .cell.none{background:repeating-linear-gradient(45deg,#e8e4dc,#e8e4dc 6px,#ddd8cf 6px,#ddd8cf 12px)}
+html[data-theme="light"] .cell.none span{color:var(--faint);opacity:1}
+.mix{font-family:var(--disp);font-size:31px;font-weight:600;letter-spacing:-.03em}
+.mix em{font-style:normal;color:var(--mute)}
+.method{color:var(--faint);font-size:12.5px;margin-top:8px}
+
+.flip{margin:22px 0 4px;border:1px solid var(--gold);border-left-width:2px;
+      background:color-mix(in srgb, var(--gold) 7%, transparent);
+      padding:14px 16px;border-radius:3px}
+.flip .lbl{color:var(--gold);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+.flip ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.flip li{display:flex;justify-content:space-between;gap:14px;font-size:13.5px}
+.flip .d{color:var(--gold)}
+
+section{padding:34px 0;border-top:1px solid var(--line);margin-top:30px}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+       flex-wrap:wrap;margin-bottom:4px}
+.shead h2{font-size:16px;font-weight:600}
+
+.rail{padding:20px 0;border-bottom:1px solid var(--line)}
+.rail:last-child{border-bottom:0}
+.rtop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+      margin-bottom:11px;flex-wrap:wrap}
+.rname{font-family:var(--disp);font-size:15.5px;font-weight:600}
+.rq{color:var(--faint);font-size:11.5px;letter-spacing:.04em;margin-top:4px}
+.rval{font-size:15px;white-space:nowrap}
+.badge{font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;
+       border-radius:2px;margin-left:9px;vertical-align:1px}
+.badge.bear{background:color-mix(in srgb,var(--bear) 15%,transparent);color:var(--bear);
+            border:1px solid color-mix(in srgb,var(--bear) 45%,transparent)}
+.badge.base{background:color-mix(in srgb,var(--mute) 14%,transparent);color:var(--mute);
+            border:1px solid color-mix(in srgb,var(--mute) 40%,transparent)}
+.badge.bull{background:color-mix(in srgb,var(--bull) 14%,transparent);color:var(--bull);
+            border:1px solid color-mix(in srgb,var(--bull) 42%,transparent)}
+.badge.none{color:var(--faint);border:1px dashed var(--line)}
+.rfoot{display:flex;justify-content:space-between;font-size:12px;color:var(--faint);
+       margin-top:9px;gap:10px;flex-wrap:wrap}
+.rfoot .to{color:var(--mute)}
+.tag{color:var(--faint);font-size:11px;border:1px dashed var(--line);padding:2px 7px;
+     border-radius:2px;margin-left:8px}
+
+.info{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;
+      border:1px solid var(--line);border-radius:50%;color:var(--faint);font-size:11px;
+      cursor:pointer;margin-left:9px;vertical-align:1px;background:none;padding:0;
+      font-family:var(--mono);line-height:1}
+.info:hover{color:var(--gold);border-color:var(--gold)}
+.info[aria-expanded="true"]{color:var(--gold);border-color:var(--gold)}
+.explain{display:none;background:var(--panel2);border-left:2px solid var(--line);
+         padding:14px 16px;margin:12px 0 2px;border-radius:0 3px 3px 0;max-width:76ch}
+.explain.open{display:block}
+.explain p{font-family:var(--serif);font-size:15.5px;line-height:1.6;margin:0;
+           color:var(--text)}
+.xrow{margin-bottom:13px}
+.xrow:last-child{margin-bottom:0}
+.xlab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--faint);margin-bottom:4px}
+.xtxt{font-family:var(--serif);font-size:15.5px;line-height:1.6;color:var(--text)}
+
+.fore{font-size:15.5px;line-height:1.6;color:var(--text);max-width:66ch}
+.fore .num{font-family:var(--mono);font-size:14px}
+.cards{display:grid;gap:11px;margin-top:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:14px 16px}
+.card .ph{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.card h4{font-family:var(--disp);font-size:14.5px;margin:6px 0 7px;font-weight:600}
+.card p{margin:0;font-family:var(--serif);font-size:15.5px;color:var(--text);line-height:1.55}
+.card .ev{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);
+          font-size:12.5px;color:var(--mute)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:3px;
+      padding:12px 13px;position:relative}
+.tile.has-info{cursor:pointer}
+.tile.has-info:hover{border-color:var(--mute)}
+.tile .tl{font-size:12px;color:var(--mute);margin-bottom:6px}
+.tile .tv{font-size:18px;letter-spacing:-.02em}
+.tile .tc{font-size:12.5px;margin-top:4px}
+.tile .tp{font-size:11px;color:var(--faint);margin-top:5px}
+.tile .texp{display:none;font-family:var(--serif);font-size:14px;line-height:1.5;
+            color:var(--mute);margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}
+.tile.open .texp{display:block}
+.up{color:var(--bull)} .down{color:var(--bear)} .flat{color:var(--faint)}
+.tile.stale{border-style:dashed;opacity:.65}
+.tile .tstale{position:absolute;top:10px;right:11px;font-size:10.5px;color:var(--gold)}
+.cat{font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);
+     margin:24px 0 10px}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0 0;
+       color:var(--faint);font-size:12.5px;line-height:1.7}
+footer code{color:var(--mute)}
+.err{background:var(--panel2);border:1px solid var(--bear);border-radius:3px;
+     padding:15px 17px;color:var(--text);font-size:14px;margin:24px 0}
+@media (max-width:640px){
+  .mix{font-size:24px} header.top h1{font-size:22px} .fore{font-size:15px}
+  header.top{flex-direction:column}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="freshness"><div class="wrap" id="fresh">
+  <span class="dot warn"></span><span>Loading…</span>
+</div></div>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Will Cardwell · scenario console</div>
+      <h1>Which scenario are we in?</h1>
+      <div class="sub">Six drivers, each scored against its own distribution.</div>
+    </div>
+    <button class="themebtn" id="theme" aria-label="Switch colour theme">Light</button>
+  </header>
+  <div class="state">
+    <div class="barcode" id="barcode"></div>
+    <div class="mix" id="mix">—</div>
+    <div class="method" id="method"></div>
+    <div id="flipwrap"></div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <div class="shead"><h2>Drivers</h2>
+    <div class="eyebrow">position in own distribution · tap i for detail</div></div>
+  <div id="rails"></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="shead"><h2>Signals</h2>
+    <div class="eyebrow">computed from the data, not narrated</div></div>
+  <div class="fore" id="signals"></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="shead"><h2>Markets</h2>
+    <div class="eyebrow">tap any tile for an explanation · dashed = last known value</div></div>
+  <div id="markets"></div>
+</div></section>
+
+<div class="wrap"><footer id="foot"></footer></div>
+
+<script>
+/* ------------------------------------------------------------------ theme */
+(function () {
+  const saved = (function () { try { return localStorage.getItem("theme"); }
+                               catch (e) { return null; } })();
+  const prefersLight = window.matchMedia
+    && window.matchMedia("(prefers-color-scheme: light)").matches;
+  const theme = saved || (prefersLight ? "light" : "dark");
+  document.documentElement.setAttribute("data-theme", theme);
+  document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("theme");
+    const label = () => {
+      btn.textContent =
+        document.documentElement.getAttribute("data-theme") === "light" ? "Dark" : "Light";
+    };
+    label();
+    btn.addEventListener("click", function () {
+      const next = document.documentElement.getAttribute("data-theme") === "light"
+                 ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      label();
+    });
+  });
+})();
+
+/* ------------------------------------------------------------------- data */
+const D = "./data";
+const j = n => fetch(D + "/" + n + ".json", {cache:"no-cache"}).then(r => {
+  if (!r.ok) throw new Error(n + ": HTTP " + r.status);
+  return r.json();
+});
+
+const CAT_ORDER = ["rates","equities.us","equities.eu","equities.nordic",
+                   "commodities","fx","volatility"];
+const CAT_NAME = {"rates":"Rates & credit","equities.us":"US equities",
+  "equities.eu":"European equities","equities.nordic":"Nordic equities",
+  "commodities":"Commodities","fx":"FX","volatility":"Volatility"};
+
+function esc(t) {
+  return String(t == null ? "" : t)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function fmt(v, units) {
+  if (v == null) return "—";
+  if (units === "percent") return v.toFixed(2) + "%";
+  if (units === "basis_points") return Math.round(v) + "bp";
+  if (units === "rate") return v.toFixed(4);
+  return Math.abs(v) >= 1000
+    ? v.toLocaleString("en-US", {maximumFractionDigits: 0})
+    : v.toFixed(2);
+}
+const pp = (v, units) => units === "basis_points"
+  ? Math.round(v) + "bp" : Number(v).toFixed(2) + "pp";
+
+/* explanations may be a plain sentence or a what/means/watch object */
+function explainHTML(x) {
+  if (!x) return "";
+  if (typeof x === "string") return '<p>' + esc(x) + '</p>';
+  const rows = [["What goes in","what"],["What it means","means"],
+                ["What would change it","watch"]];
+  return rows.filter(r => x[r[1]]).map(r =>
+    '<div class="xrow"><div class="xlab">' + r[0] + '</div>'
+    + '<div class="xtxt">' + esc(x[r[1]]) + '</div></div>').join("");
+}
+
+function freshness(status) {
+  const bad = status.series.filter(s => s.state !== "ok");
+  const when = new Date(status.updated).toLocaleString("en-GB",
+    {timeZone: "Europe/Helsinki", dateStyle: "medium", timeStyle: "short"});
+  document.getElementById("fresh").innerHTML =
+    '<span class="dot ' + (bad.length ? "warn" : "ok") + '"></span>' +
+    (bad.length
+      ? "<span><b>" + status.ok + " of " + status.total + " series current</b> as of "
+        + when + " Helsinki.</span><span>" + bad.map(b => esc(b.id)).join(", ")
+        + " showing last known values.</span>"
+      : "<span><b>All " + status.total + " series current</b> as of " + when
+        + " Helsinki.</span>");
+}
+
+function scenario(st) {
+  const bc = document.getElementById("barcode");
+  bc.style.gridTemplateColumns = "repeat(" + Math.min(st.drivers.length, 6) + ", 1fr)";
+  bc.innerHTML = st.drivers.map(function (d) {
+    const b = ["bull","base","bear"].indexOf(d.band) >= 0 ? d.band : "none";
+    return '<div class="cell ' + b + '" title="' + esc(d.label) + ": " + esc(d.band)
+         + '"><span>' + esc(d.label.split(/[\s&]+/)[0]) + "</span></div>";
+  }).join("");
+
+  document.getElementById("mix").innerHTML =
+    st.mix.base + " base <em>·</em> " + st.mix.bear + " bear <em>·</em> " + st.mix.bull + " bull";
+
+  const unscored = st.drivers.length
+    - st.drivers.filter(d => ["bull","base","bear"].indexOf(d.band) >= 0).length;
+  document.getElementById("method").innerHTML =
+    esc(st.method) + (unscored ? " · " + unscored + " driver(s) unscored" : "")
+    + (st.how_to_read
+        ? ' <button class="info" aria-expanded="false" aria-label="How to read this">i</button>'
+          + '<div class="explain"><p>' + esc(st.how_to_read) + "</p></div>"
+        : "");
+
+  if (st.flip_watch && st.flip_watch.length) {
+    document.getElementById("flipwrap").innerHTML =
+      '<div class="flip"><div class="lbl">Closest to flipping</div><ul>'
+      + st.flip_watch.map(f => "<li><span>" + esc(f.driver)
+          + ' → bear</span><span class="d">' + pp(f.to_bear, f.units) + "</span></li>").join("")
+      + "</ul></div>";
+  }
+}
+
+function rail(d) {
+  const scored = ["bull","base","bear"].indexOf(d.band) >= 0;
+  const why = (d.bears_on || []).map(esc).join(" · ");
+  const info = d.explain
+    ? '<button class="info" aria-expanded="false" aria-label="About this driver">i</button>'
+    : "";
+  const panel = d.explain ? '<div class="explain">' + explainHTML(d.explain) + "</div>" : "";
+
+  if (!scored) {
+    return '<div class="rail"><div class="rtop"><div>'
+      + '<span class="rname">' + esc(d.label) + "</span>"
+      + '<span class="badge none">' + esc(String(d.band || "").replace(/_/g," ")) + "</span>"
+      + info + '<div class="rq">' + why + "</div></div>"
+      + '<div class="rval">' + fmt(d.value, d.units) + "</div></div>"
+      + '<div class="rfoot"><span>not enough history to place this in a distribution</span></div>'
+      + panel + "</div>";
+  }
+
+  const now = Math.max(0, Math.min(100, d.percentile));
+  const higherIsBear = d.edges.bear_at > d.edges.bull_at;
+  const leftCol  = higherIsBear ? "var(--bull)" : "var(--bear)";
+  const rightCol = higherIsBear ? "var(--bear)" : "var(--bull)";
+  const markCol  = d.band === "bear" ? "var(--bear)"
+                 : d.band === "bull" ? "var(--bull)" : "var(--marker)";
+
+  return '<div class="rail"><div class="rtop"><div>'
+    + '<span class="rname">' + esc(d.label) + "</span>"
+    + '<span class="badge ' + d.band + '">' + d.band + "</span>"
+    + (d.weak ? '<span class="tag">weak proxy</span>' : "")
+    + (d.override_applied ? '<span class="tag">override</span>' : "")
+    + info
+    + '<div class="rq">' + why + "</div></div>"
+    + '<div class="rval">' + fmt(d.value, d.units)
+    +   ' <span style="color:var(--faint)">· p' + d.percentile + "</span></div></div>"
+    + '<svg viewBox="0 0 100 13" preserveAspectRatio="none" role="img"'
+    + ' style="width:100%;height:36px;display:block"'
+    + ' aria-label="' + esc(d.label) + ": " + fmt(d.value, d.units) + ", " + d.band
+    +   ", " + d.percentile + 'th percentile">'
+    +   '<rect x="0" y="4.6" width="100" height="3.8" fill="var(--railbg)" rx=".6"/>'
+    +   '<rect x="0" y="4.6" width="20" height="3.8" fill="' + leftCol + '" opacity=".3"/>'
+    +   '<rect x="80" y="4.6" width="20" height="3.8" fill="' + rightCol + '" opacity=".3"/>'
+    +   '<line x1="20" y1="3.2" x2="20" y2="9.8" stroke="var(--railtick)" stroke-width=".45"/>'
+    +   '<line x1="80" y1="3.2" x2="80" y2="9.8" stroke="var(--railtick)" stroke-width=".45"/>'
+    +   '<line x1="' + now + '" y1="1.4" x2="' + now + '" y2="11.6" stroke="'
+    +     markCol + '" stroke-width="1.2"/>'
+    + "</svg>"
+    + '<div class="rfoot"><span>' + d.window_years + "y window</span>"
+    +   '<span class="to">' + (d.band === "bear" ? "in bear band"
+          : pp(d.distance_to_bear, d.units) + " from bear") + "</span>"
+    +   "<span>as of " + esc(d.as_of) + "</span></div>"
+    + panel + "</div>";
+}
+
+function signals(ctx) {
+  const r = ctx.regime || {};
+  const bits = [];
+  if (r.curve_10y_2y != null)
+    bits.push('Yield curve <span class="num">' + r.curve_10y_2y.toFixed(2)
+              + "pp</span> (" + esc(r.curve_state) + ")");
+  if (r.credit_state) bits.push("credit " + esc(r.credit_state));
+  let html = bits.length ? "<p>" + bits.join(" · ") + ".</p>" : "";
+
+  html += '<div class="cards">';
+  const dv = ctx.divergences || [];
+  if (dv.length) {
+    html += dv.slice(0, 4).map(d => '<div class="card"><div class="ph">Divergence</div>'
+      + "<h4>" + esc(d.pair) + "</h4><p>" + Math.abs(d.gap_1m_pp)
+      + 'pp apart over one month.</p><div class="ev">' + esc(d.detail) + "</div></div>").join("");
+  } else {
+    html += '<div class="card"><div class="ph">No signal found</div>'
+      + "<h4>No cross-asset divergence this run</h4>"
+      + "<p>Every tracked pair moved within 3pp of its partner over one month.</p>"
+      + '<div class="ev">An absent signal is a result, not a gap.</div></div>';
+  }
+  const ex = ctx.extremes_5y || [];
+  if (ex.length) {
+    html += '<div class="card"><div class="ph">At five-year extremes</div><h4>'
+      + ex.length + " of " + (ctx.series || []).length + " series in the tails</h4><p>"
+      + ex.slice(0, 6).map(e => esc(e.label) + " (p" + e.pctile_5y + ")").join(", ")
+      + (ex.length > 6 ? "…" : "")
+      + '</p><div class="ev">Top or bottom 5% of each series\' own five-year range.</div></div>';
+  }
+  html += "</div>";
+  document.getElementById("signals").innerHTML = html;
+}
+
+function markets(recs) {
+  const byCat = {};
+  recs.forEach(s => {
+    const c = s.category || "other";
+    if (!byCat[c]) byCat[c] = [];
+    byCat[c].push(s);
+  });
+  const rank = c => { const i = CAT_ORDER.indexOf(c); return i < 0 ? 99 : i; };
+  const cats = Object.keys(byCat).sort((a, b) => rank(a) - rank(b));
+
+  document.getElementById("markets").innerHTML = cats.map(c => {
+    const tiles = byCat[c].sort((a, b) => a.label.localeCompare(b.label)).map(s => {
+      const ch = s.chg ? s.chg["1d"] : null;
+      const dir = s.stale ? "flat" : ch > 0 ? "up" : ch < 0 ? "down" : "flat";
+      const arw = s.stale ? "–" : ch > 0 ? "▲" : ch < 0 ? "▼" : "–";
+      return '<div class="tile' + (s.stale ? " stale" : "")
+        + (s.explain ? " has-info" : "") + '"'
+        + (s.explain ? ' title="Tap for an explanation"' : "") + ">"
+        + (s.stale ? '<div class="tstale">stale ' + (s.stale_days || "?") + "d</div>" : "")
+        + '<div class="tl">' + esc(s.label) + "</div>"
+        + '<div class="tv">' + fmt(s.last, s.units) + "</div>"
+        + '<div class="tc ' + dir + '">' + arw + " "
+        +   (ch == null ? "—" : Math.abs(ch).toFixed(2) + "%") + "</div>"
+        + '<div class="tp">' + (s.pctile_5y != null ? "p" + s.pctile_5y + " 5y" : "")
+        +   (s.cadence === "monthly" ? " · monthly" : "") + "</div>"
+        + (s.explain ? '<div class="texp">' + esc(s.explain) + "</div>" : "")
+        + "</div>";
+    }).join("");
+    return '<div class="cat">' + (CAT_NAME[c] || esc(c)) + "</div>"
+         + '<div class="grid">' + tiles + "</div>";
+  }).join("");
+}
+
+/* one delegated listener for every disclosure */
+document.addEventListener("click", function (ev) {
+  const btn = ev.target.closest(".info");
+  if (btn) {
+    const open = btn.getAttribute("aria-expanded") === "true";
+    const scope = btn.closest(".rail") || btn.closest(".method") || btn.parentElement;
+    const panel = scope && scope.querySelector(".explain");
+    if (panel) panel.classList.toggle("open", !open);
+    btn.setAttribute("aria-expanded", String(!open));
+    ev.stopPropagation();
+    return;
+  }
+  const tile = ev.target.closest(".tile.has-info");
+  if (tile) tile.classList.toggle("open");
+});
+
+(async function () {
+  try {
+    const status = await j("status");
+    freshness(status);
+
+    const state = await j("scenario_state").catch(() => null);
+    const ctx   = await j("ai_context").catch(() => null);
+
+    if (state) {
+      scenario(state);
+      document.getElementById("rails").innerHTML = state.drivers.map(rail).join("");
+    }
+    if (ctx) signals(ctx);
+
+    const recs = (await Promise.all(
+      status.series.map(s => j(s.id).catch(() => null))
+    )).filter(r => r && r.label);
+    markets(recs);
+
+    document.getElementById("foot").innerHTML =
+      "Built from <code>series-manifest.yaml</code>, <code>scenario-spec.yaml</code> and "
+      + "<code>explanations.yaml</code>. Data refreshed weekday mornings by GitHub Actions; "
+      + "this page reads committed JSON and never calls a data vendor at load.<br>"
+      + (state && state.caveat ? esc(state.caveat) : "");
+  } catch (e) {
+    document.querySelector(".state").insertAdjacentHTML("beforebegin",
+      '<div class="err"><b>Could not load data.</b> ' + esc(e.message)
+      + ". Run <code>python3 pipeline/fetch.py</code> and make sure the "
+      + "<code>data/</code> folder sits next to this file.</div>");
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

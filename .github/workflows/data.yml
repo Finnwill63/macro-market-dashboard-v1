@@ -1,0 +1,55 @@
+name: refresh-data
+
+on:
+  schedule:
+    # 06:20 UTC weekdays — after the US close, before the Helsinki working day
+    - cron: "20 6 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install deps
+        run: pip install pyyaml
+
+      - name: Fetch series
+        id: fetch
+        continue-on-error: true       # a stale series must not block the commit
+        env:
+          TD_KEY: ${{ secrets.TD_KEY }}
+        run: python pipeline/fetch.py
+
+      - name: Score scenarios
+        run: python pipeline/score_scenarios.py
+
+      - name: Build context
+        run: python pipeline/build_context.py
+
+      - name: Commit
+        run: |
+          git config user.name  "data-bot"
+          git config user.email "data-bot@users.noreply.github.com"
+          git add data/
+          git diff --staged --quiet || git commit -m "data: $(date -u +%Y-%m-%d)"
+          git push
+
+      - name: Flag stale series
+        if: steps.fetch.outcome == 'failure'
+        run: |
+          echo "::error::One or more series fell back to last-known values."
+          echo "See data/status.json."
+          exit 1

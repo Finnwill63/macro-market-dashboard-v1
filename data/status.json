@@ -1,0 +1,197 @@
+{
+  "updated": "2026-08-23T11:40:18+00:00",
+  "ok": 38,
+  "total": 38,
+  "series": [
+    {
+      "id": "rate_us_2y",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "rate_us_10y",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "rate_us_30y",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "rate_us_hy_spread",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "rate_us_curve_10y2y",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "rate_ecb_depo",
+      "state": "ok",
+      "source": "ecb_sdw"
+    },
+    {
+      "id": "rate_fi_10y",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "rate_de_10y",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "eq_us_sp500",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "eq_us_nasdaq",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "eq_us_nasdaq_comp",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "eq_us_dow",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "eq_us_russell2000",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "vol_vix",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "eq_eu_stoxx600_usd",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "eq_eu_dax_usd",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "eq_eu_cac40_usd",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "eq_eu_ftse100_usd",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "eq_nordic_finland_usd",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "eq_nordic_denmark_usd",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "eq_nordic_norway_usd",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "eq_nordic_sweden_usd",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "cmd_crude_brent",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "cmd_crude_wti",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "cmd_natgas",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "cmd_gold",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "cmd_copper",
+      "state": "ok",
+      "source": "twelvedata"
+    },
+    {
+      "id": "fx_eur_usd",
+      "state": "ok",
+      "source": "fred"
+    },
+    {
+      "id": "fx_eur_inr",
+      "state": "ok",
+      "source": "ecb_sdw"
+    },
+    {
+      "id": "fx_eur_sek",
+      "state": "ok",
+      "source": "ecb_sdw"
+    },
+    {
+      "id": "eq_nordic_finland_eur",
+      "state": "ok",
+      "source": "derived"
+    },
+    {
+      "id": "eq_nordic_denmark_eur",
+      "state": "ok",
+      "source": "derived"
+    },
+    {
+      "id": "eq_nordic_norway_eur",
+      "state": "ok",
+      "source": "derived"
+    },
+    {
+      "id": "eq_nordic_sweden_eur",
+      "state": "ok",
+      "source": "derived"
+    },
+    {
+      "id": "eq_eu_stoxx600_eur",
+      "state": "ok",
+      "source": "derived"
+    },
+    {
+      "id": "eq_eu_dax_eur",
+      "state": "ok",
+      "source": "derived"
+    },
+    {
+      "id": "eq_eu_cac40_eur",
+      "state": "ok",
+      "source": "derived"
+    },
+    {
+      "id": "eq_eu_ftse100_eur",
+      "state": "ok",
+      "source": "derived"
+    }
+  ]
+}
