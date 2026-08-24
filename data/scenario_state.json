@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-23T15:06:20+00:00",
+  "generated": "2026-08-24T07:34:21+00:00",
   "method": "percentile bands, 10y window, 20/80 cuts",
   "mix": {
     "bull": 1,
@@ -45,10 +45,10 @@
       "override_applied": false,
       "window_years": 10.0,
       "edges": {
-        "bear_at": 4.21,
+        "bear_at": 4.212,
         "bull_at": 1.64
       },
-      "distance_to_bear": 0.48,
+      "distance_to_bear": 0.478,
       "distance_to_bull": 3.05,
       "as_of": "2026-08-20"
     },
@@ -101,11 +101,11 @@
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": 6.102,
-        "bull_at": 36.93
+        "bear_at": 6.098,
+        "bull_at": 36.938
       },
-      "distance_to_bear": 20.542,
-      "distance_to_bull": 10.285,
+      "distance_to_bear": 20.547,
+      "distance_to_bull": 10.293,
       "as_of": "2026-08-21"
     },
     {
@@ -150,16 +150,16 @@
         "watch": "The proxy is imperfect \u2014 MSCI Finland is not OMXH25, with different constituents and weights. Compare the EUR and USD versions of this series directly: the gap between them is pure currency, not Finnish companies."
       },
       "value": -3.377,
-      "percentile": 25.2,
+      "percentile": 25.3,
       "band": "base",
       "override_applied": false,
       "window_years": 9.7,
       "edges": {
         "bear_at": -4.473,
-        "bull_at": 7.604
+        "bull_at": 7.606
       },
       "distance_to_bear": 1.096,
-      "distance_to_bull": 10.981,
+      "distance_to_bull": 10.983,
       "as_of": "2026-08-21"
     },
     {
@@ -181,11 +181,11 @@
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": -2.05,
-        "bull_at": 11.038
+        "bear_at": -2.053,
+        "bull_at": 11.04
       },
-      "distance_to_bear": 12.283,
-      "distance_to_bull": 0.805,
+      "distance_to_bear": 12.286,
+      "distance_to_bull": 0.806,
       "as_of": "2026-08-21"
     }
   ],
