@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-28T18:51:15+00:00",
+  "generated": "2026-08-31T14:09:27+00:00",
   "method": "percentile bands, 10y window, 20/80 cuts",
   "mix": {
     "bull": 1,
@@ -39,18 +39,18 @@
         "means": "This is the reference rate almost every other asset is priced against. When it rises, future cash flows are discounted harder \u2014 and the assets hurt most are the ones whose value sits furthest out, which is exactly what early-stage equity is. A high reading works against valuations, exit timing and LP appetite simultaneously.",
         "watch": "Inflation surprises and central bank guidance move it. A sustained 50bp move in either direction shifts the band. Falling below roughly 3.5% would take it out of bear territory."
       },
-      "value": 4.66,
-      "percentile": 98.0,
+      "value": 4.67,
+      "percentile": 98.4,
       "band": "bear",
       "override_applied": false,
       "window_years": 10.0,
       "edges": {
         "bear_at": 4.22,
-        "bull_at": 1.642
+        "bull_at": 1.65
       },
-      "distance_to_bear": 0.44,
-      "distance_to_bull": 3.018,
-      "as_of": "2026-08-26"
+      "distance_to_bear": 0.45,
+      "distance_to_bull": 3.02,
+      "as_of": "2026-08-27"
     },
     {
       "driver": "risk_appetite",
@@ -68,7 +68,7 @@
         "watch": "Widens on default fears, banking stress or a growth scare. Worth pinning an absolute floor here \u2014 above 3% has historically meant real stress regardless of where the ten-year distribution sits."
       },
       "value": 1.64,
-      "percentile": 14.5,
+      "percentile": 14.6,
       "band": "bull",
       "override_applied": false,
       "window_years": 10.0,
@@ -95,18 +95,18 @@
         "means": "A rough stand-in for appetite to buy or list technology companies. When public tech multiples are strong, acquirers are more confident and the IPO window tends to be open \u2014 but this measures prices, not transactions.",
         "watch": "Replace it. The honest version would be IPO counts or M&A volume; no free source for either has been found yet. Until then, treat a strong reading as permission to look rather than evidence the window is open."
       },
-      "value": 25.782,
-      "percentile": 53.6,
+      "value": 24.174,
+      "percentile": 48.8,
       "band": "base",
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": 6.107,
-        "bull_at": 36.922
+        "bear_at": 6.098,
+        "bull_at": 36.938
       },
-      "distance_to_bear": 19.675,
-      "distance_to_bull": 11.14,
-      "as_of": "2026-08-27"
+      "distance_to_bear": 18.076,
+      "distance_to_bull": 12.765,
+      "as_of": "2026-08-28"
     },
     {
       "driver": "finland_risk_pricing",
@@ -123,16 +123,16 @@
         "watch": "Sovereign rating actions, fiscal announcements and euro-area stress all move it. Because it is monthly, it moves twelve times a year \u2014 useful for \"since the spring\", useless for \"this week\". Note that a stable spread can hide both yields rising together, which is what is happening now."
       },
       "value": 34.073,
-      "percentile": 47.5,
+      "percentile": 47.0,
       "band": "base",
       "override_applied": false,
       "window_years": 9.7,
       "edges": {
-        "bear_at": 53.338,
-        "bull_at": 24.45
+        "bear_at": 53.867,
+        "bull_at": 24.646
       },
-      "distance_to_bear": 19.264,
-      "distance_to_bull": 9.623,
+      "distance_to_bear": 19.793,
+      "distance_to_bull": 9.427,
       "as_of": "2026-06-01"
     },
     {
