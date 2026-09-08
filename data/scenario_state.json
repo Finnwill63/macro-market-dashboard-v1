@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-07T12:46:50+00:00",
+  "generated": "2026-09-08T11:29:23+00:00",
   "method": "percentile bands, 10y window, 20/80 cuts",
   "mix": {
     "bull": 1,
@@ -20,7 +20,7 @@
       "band": "base",
       "value": -0.795,
       "units": "percent",
-      "to_bear": 3.729
+      "to_bear": 3.737
     }
   ],
   "drivers": [
@@ -101,11 +101,11 @@
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": 6.102,
-        "bull_at": 36.93
+        "bear_at": 6.098,
+        "bull_at": 36.938
       },
-      "distance_to_bear": 18.91,
-      "distance_to_bull": 11.918,
+      "distance_to_bear": 18.915,
+      "distance_to_bull": 11.926,
       "as_of": "2026-09-04"
     },
     {
@@ -155,11 +155,11 @@
       "override_applied": false,
       "window_years": 9.7,
       "edges": {
-        "bear_at": -4.524,
-        "bull_at": 7.604
+        "bear_at": -4.532,
+        "bull_at": 7.608
       },
-      "distance_to_bear": 3.729,
-      "distance_to_bull": 8.399,
+      "distance_to_bear": 3.737,
+      "distance_to_bull": 8.403,
       "as_of": "2026-09-04"
     },
     {
@@ -175,8 +175,8 @@
         "means": "The exchange rate the Nordics-India corridor runs on. A stronger euro makes Indian expansion cheaper to fund from Europe, but shrinks the euro value of revenue earned in India. Which direction helps depends entirely on where a company sits in that journey \u2014 pre-revenue expansion or repatriating earnings.",
         "watch": "Currently near the top of its five-year range, meaning the euro is historically strong against the rupee. Good for funding entry now; a headwind later if it holds when revenue starts coming back."
       },
-      "value": 7.007,
-      "percentile": 59.0,
+      "value": 6.394,
+      "percentile": 56.4,
       "band": "base",
       "override_applied": false,
       "window_years": 9.0,
@@ -184,9 +184,9 @@
         "bear_at": -2.053,
         "bull_at": 11.04
       },
-      "distance_to_bear": 9.06,
-      "distance_to_bull": 4.033,
-      "as_of": "2026-09-04"
+      "distance_to_bear": 8.447,
+      "distance_to_bull": 4.646,
+      "as_of": "2026-09-07"
     }
   ],
   "how_to_read": "Every number is scored against its own history rather than an absolute threshold. \"p98.8\" means today sits higher than 98.8% of the last ten years of that same series. The bands are the top and bottom fifth of that range. The known limitation: if a level persists for years it becomes the new normal and the band quietly resets, so no driver can stay bear indefinitely.\n",
