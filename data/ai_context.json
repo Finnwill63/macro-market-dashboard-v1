@@ -1,19 +1,19 @@
 {
-  "generated": "2026-09-09T11:35:07+00:00",
+  "generated": "2026-09-10T11:32:27+00:00",
   "series": [
     {
       "label": "Copper (CPER)",
       "category": "commodities",
-      "last": 40.57,
+      "last": 41.049999,
       "units": "usd",
       "chg": {
-        "1d": 1.55,
-        "1w": 3.84,
-        "1m": 1.68,
-        "3m": 7.56,
-        "12m": 44.74
+        "1d": 1.18,
+        "1w": 3.85,
+        "1m": 2.17,
+        "3m": 5.42,
+        "12m": 45.93
       },
-      "pctile_5y": 99.7,
+      "pctile_5y": 100.0,
       "stale": false
     },
     {
@@ -49,16 +49,16 @@
     {
       "label": "Gold (GLD)",
       "category": "commodities",
-      "last": 399.72,
+      "last": 403.35001,
       "units": "usd",
       "chg": {
-        "1d": -1.73,
-        "1w": 0.75,
-        "1m": 0.31,
-        "3m": 6.71,
-        "12m": 19.38
+        "1d": 0.91,
+        "1w": 0.14,
+        "1m": 0.2,
+        "3m": 4.41,
+        "12m": 20.74
       },
-      "pctile_5y": 89.9,
+      "pctile_5y": 90.3,
       "stale": false
     },
     {
@@ -79,346 +79,346 @@
     {
       "label": "Euro area (EZU",
       "category": "equities.eu",
-      "last": 70.37,
+      "last": 69.63,
       "units": "usd",
       "chg": {
-        "1d": -0.13,
-        "1w": 1.06,
-        "1m": -1.68,
-        "3m": 4.34,
-        "12m": 16.87
+        "1d": -1.05,
+        "1w": -0.36,
+        "1m": -2.34,
+        "3m": -0.43,
+        "12m": 15.65
       },
-      "pctile_5y": 98.3,
+      "pctile_5y": 97.7,
       "stale": false
     },
     {
       "label": "Euro area (EZU",
       "category": "equities.eu",
-      "last": 60.569805,
+      "last": 59.932863,
       "units": "eur",
       "chg": {
-        "1d": -0.13,
-        "1w": 0.85,
-        "1m": -2.18,
-        "3m": 3.73,
-        "12m": 18.21
+        "1d": -1.05,
+        "1w": -0.58,
+        "1m": -2.9,
+        "3m": -1.31,
+        "12m": 16.69
       },
-      "pctile_5y": 97.9,
+      "pctile_5y": 96.5,
       "stale": false
     },
     {
       "label": "France (EWQ",
       "category": "equities.eu",
-      "last": 39.266655,
+      "last": 38.63832,
       "units": "eur",
       "chg": {
-        "1d": -0.15,
-        "1w": 0.18,
-        "1m": -5.24,
-        "3m": 0.21,
-        "12m": 7.33
+        "1d": -1.6,
+        "1w": -1.76,
+        "1m": -6.52,
+        "3m": -4.4,
+        "12m": 5.19
       },
-      "pctile_5y": 92.7,
+      "pctile_5y": 88.1,
       "stale": false
     },
     {
       "label": "France (EWQ",
       "category": "equities.eu",
-      "last": 45.62,
+      "last": 44.89,
       "units": "usd",
       "chg": {
-        "1d": -0.15,
-        "1w": 0.4,
-        "1m": -4.76,
-        "3m": 0.8,
-        "12m": 6.12
+        "1d": -1.6,
+        "1w": -1.54,
+        "1m": -5.99,
+        "3m": -3.55,
+        "12m": 4.25
       },
-      "pctile_5y": 93.7,
+      "pctile_5y": 87.4,
       "stale": false
     },
     {
       "label": "Germany (EWG",
       "category": "equities.eu",
-      "last": 43.57,
+      "last": 43.040001,
       "units": "usd",
       "chg": {
-        "1d": -0.73,
-        "1w": 0.3,
-        "1m": -1.02,
-        "3m": 5.57,
-        "12m": 4.51
+        "1d": -1.22,
+        "1w": -1.1,
+        "1m": -1.89,
+        "3m": 1.82,
+        "12m": 3.76
       },
-      "pctile_5y": 96.7,
+      "pctile_5y": 94.2,
       "stale": false
     },
     {
       "label": "Germany (EWG",
       "category": "equities.eu",
-      "last": 37.502152,
+      "last": 37.045964,
       "units": "eur",
       "chg": {
-        "1d": -0.73,
-        "1w": 0.08,
-        "1m": -1.52,
-        "3m": 4.96,
-        "12m": 5.71
+        "1d": -1.22,
+        "1w": -1.32,
+        "1m": -2.45,
+        "3m": 0.92,
+        "12m": 4.7
       },
-      "pctile_5y": 97.5,
+      "pctile_5y": 95.2,
       "stale": false
     },
     {
       "label": "UK (EWU",
       "category": "equities.eu",
-      "last": 41.616457,
+      "last": 41.168876,
       "units": "eur",
       "chg": {
-        "1d": -0.49,
-        "1w": 0.12,
-        "1m": -1.1,
-        "3m": 4.93,
-        "12m": 17.25
-      },
-      "pctile_5y": 98.0,
-      "stale": false
-    },
-    {
-      "label": "UK (EWU",
-      "category": "equities.eu",
-      "last": 48.35,
-      "units": "usd",
-      "chg": {
-        "1d": -0.49,
-        "1w": 0.33,
-        "1m": -0.6,
-        "3m": 5.54,
-        "12m": 15.92
-      },
-      "pctile_5y": 98.4,
-      "stale": false
-    },
-    {
-      "label": "Denmark (EDEN",
-      "category": "equities.nordic",
-      "last": 118.029999,
-      "units": "usd",
-      "chg": {
-        "1d": -0.72,
-        "1w": 1.05,
-        "1m": 3.16,
-        "3m": 8.95,
-        "12m": 8.37
-      },
-      "pctile_5y": 82.8,
-      "stale": false
-    },
-    {
-      "label": "Denmark (MSCI proxy",
-      "category": "equities.nordic",
-      "last": 101.592356,
-      "units": "eur",
-      "chg": {
-        "1d": -0.72,
-        "1w": 0.84,
-        "1m": 2.64,
-        "3m": 8.32,
-        "12m": 9.61
-      },
-      "pctile_5y": 73.3,
-      "stale": false
-    },
-    {
-      "label": "Finland (EFNL",
-      "category": "equities.nordic",
-      "last": 55.44,
-      "units": "usd",
-      "chg": {
-        "1d": 0.76,
-        "1w": 1.43,
-        "1m": 5.08,
-        "3m": 3.98,
-        "12m": 30.17
-      },
-      "pctile_5y": 98.8,
-      "stale": false
-    },
-    {
-      "label": "Finland (MSCI proxy",
-      "category": "equities.nordic",
-      "last": 47.719057,
-      "units": "eur",
-      "chg": {
-        "1d": 0.76,
-        "1w": 1.21,
-        "1m": 4.55,
-        "3m": 3.37,
-        "12m": 31.66
-      },
-      "pctile_5y": 98.8,
-      "stale": false
-    },
-    {
-      "label": "Norway (ENOR",
-      "category": "equities.nordic",
-      "last": 37.32,
-      "units": "usd",
-      "chg": {
-        "1d": 1.0,
-        "1w": 1.41,
-        "1m": 6.87,
-        "3m": 4.19,
-        "12m": 32.11
-      },
-      "pctile_5y": 98.9,
-      "stale": false
-    },
-    {
-      "label": "Norway (MSCI proxy",
-      "category": "equities.nordic",
-      "last": 32.122568,
-      "units": "eur",
-      "chg": {
-        "1d": 1.0,
-        "1w": 1.19,
-        "1m": 6.33,
-        "3m": 3.58,
-        "12m": 33.62
-      },
-      "pctile_5y": 99.3,
-      "stale": false
-    },
-    {
-      "label": "Sweden (EWD",
-      "category": "equities.nordic",
-      "last": 53.009998,
-      "units": "usd",
-      "chg": {
-        "1d": -0.24,
-        "1w": 1.18,
-        "1m": -1.12,
-        "3m": 5.6,
-        "12m": 11.79
-      },
-      "pctile_5y": 96.6,
-      "stale": false
-    },
-    {
-      "label": "Sweden (MSCI proxy",
-      "category": "equities.nordic",
-      "last": 45.627473,
-      "units": "eur",
-      "chg": {
-        "1d": -0.24,
-        "1w": 0.97,
-        "1m": -1.62,
-        "3m": 4.98,
-        "12m": 13.07
-      },
-      "pctile_5y": 97.8,
-      "stale": false
-    },
-    {
-      "label": "Dow Jones",
-      "category": "equities.us",
-      "last": 52786.07,
-      "units": "index",
-      "chg": {
-        "1d": -1.18,
-        "1w": 0.04,
-        "1m": -2.31,
-        "3m": 5.74,
-        "12m": 15.98
-      },
-      "pctile_5y": 97.9,
-      "stale": false
-    },
-    {
-      "label": "Nasdaq 100",
-      "category": "equities.us",
-      "last": 29507.7,
-      "units": "index",
-      "chg": {
-        "1d": -0.12,
-        "1w": 1.48,
-        "1m": -0.72,
-        "3m": 3.51,
-        "12m": 24.18
-      },
-      "pctile_5y": 97.4,
-      "stale": false
-    },
-    {
-      "label": "Nasdaq Composite",
-      "category": "equities.us",
-      "last": 26421.41,
-      "units": "index",
-      "chg": {
-        "1d": -0.32,
-        "1w": 1.23,
-        "1m": -1.01,
-        "3m": 4.97,
-        "12m": 21.21
-      },
-      "pctile_5y": 98.2,
-      "stale": false
-    },
-    {
-      "label": "Russell 2000 (IWM)",
-      "category": "equities.us",
-      "last": 294.67001,
-      "units": "usd",
-      "chg": {
-        "1d": -0.45,
-        "1w": 1.41,
-        "1m": -2.28,
-        "3m": 4.47,
-        "12m": 23.68
+        "1d": -1.08,
+        "1w": -1.03,
+        "1m": -1.92,
+        "3m": 1.08,
+        "12m": 15.6
       },
       "pctile_5y": 96.9,
       "stale": false
     },
     {
-      "label": "S&P 500",
+      "label": "UK (EWU",
+      "category": "equities.eu",
+      "last": 47.83,
+      "units": "usd",
+      "chg": {
+        "1d": -1.08,
+        "1w": -0.81,
+        "1m": -1.36,
+        "3m": 1.98,
+        "12m": 14.56
+      },
+      "pctile_5y": 96.6,
+      "stale": false
+    },
+    {
+      "label": "Denmark (EDEN",
+      "category": "equities.nordic",
+      "last": 116.43,
+      "units": "usd",
+      "chg": {
+        "1d": -1.36,
+        "1w": -1.05,
+        "1m": 2.96,
+        "3m": 4.9,
+        "12m": 7.0
+      },
+      "pctile_5y": 80.6,
+      "stale": false
+    },
+    {
+      "label": "Denmark (MSCI proxy",
+      "category": "equities.nordic",
+      "last": 100.215183,
+      "units": "eur",
+      "chg": {
+        "1d": -1.36,
+        "1w": -1.28,
+        "1m": 2.38,
+        "3m": 3.97,
+        "12m": 7.97
+      },
+      "pctile_5y": 68.7,
+      "stale": false
+    },
+    {
+      "label": "Finland (EFNL",
+      "category": "equities.nordic",
+      "last": 56.009998,
+      "units": "usd",
+      "chg": {
+        "1d": 1.03,
+        "1w": 2.88,
+        "1m": 6.4,
+        "3m": 1.47,
+        "12m": 31.45
+      },
+      "pctile_5y": 99.3,
+      "stale": false
+    },
+    {
+      "label": "Finland (MSCI proxy",
+      "category": "equities.nordic",
+      "last": 48.209673,
+      "units": "eur",
+      "chg": {
+        "1d": 1.03,
+        "1w": 2.65,
+        "1m": 5.8,
+        "3m": 0.57,
+        "12m": 32.64
+      },
+      "pctile_5y": 99.2,
+      "stale": false
+    },
+    {
+      "label": "Norway (ENOR",
+      "category": "equities.nordic",
+      "last": 37.77,
+      "units": "usd",
+      "chg": {
+        "1d": 1.21,
+        "1w": 1.92,
+        "1m": 7.24,
+        "3m": 4.45,
+        "12m": 32.81
+      },
+      "pctile_5y": 99.7,
+      "stale": false
+    },
+    {
+      "label": "Norway (MSCI proxy",
+      "category": "equities.nordic",
+      "last": 32.509898,
+      "units": "eur",
+      "chg": {
+        "1d": 1.21,
+        "1w": 1.69,
+        "1m": 6.63,
+        "3m": 3.53,
+        "12m": 34.01
+      },
+      "pctile_5y": 99.8,
+      "stale": false
+    },
+    {
+      "label": "Sweden (EWD",
+      "category": "equities.nordic",
+      "last": 52.38,
+      "units": "usd",
+      "chg": {
+        "1d": -1.19,
+        "1w": -0.34,
+        "1m": -1.98,
+        "3m": 1.55,
+        "12m": 10.74
+      },
+      "pctile_5y": 94.7,
+      "stale": false
+    },
+    {
+      "label": "Sweden (MSCI proxy",
+      "category": "equities.nordic",
+      "last": 45.085213,
+      "units": "eur",
+      "chg": {
+        "1d": -1.19,
+        "1w": -0.57,
+        "1m": -2.54,
+        "3m": 0.65,
+        "12m": 11.74
+      },
+      "pctile_5y": 95.7,
+      "stale": false
+    },
+    {
+      "label": "Dow Jones",
       "category": "equities.us",
-      "last": 7673.52,
+      "last": 52380.66,
       "units": "index",
       "chg": {
-        "1d": -0.58,
-        "1w": 0.55,
-        "1m": -1.08,
-        "3m": 5.59,
-        "12m": 18.14
+        "1d": -0.77,
+        "1w": -1.28,
+        "1m": -2.96,
+        "3m": 3.01,
+        "12m": 14.59
       },
-      "pctile_5y": 98.4,
+      "pctile_5y": 97.0,
+      "stale": false
+    },
+    {
+      "label": "Nasdaq 100",
+      "category": "equities.us",
+      "last": 29421.55,
+      "units": "index",
+      "chg": {
+        "1d": -0.29,
+        "1w": 0.95,
+        "1m": -0.68,
+        "3m": -0.08,
+        "12m": 23.41
+      },
+      "pctile_5y": 96.6,
+      "stale": false
+    },
+    {
+      "label": "Nasdaq Composite",
+      "category": "equities.us",
+      "last": 26253.34,
+      "units": "index",
+      "chg": {
+        "1d": -0.64,
+        "1w": 0.14,
+        "1m": -1.32,
+        "3m": 1.72,
+        "12m": 19.99
+      },
+      "pctile_5y": 97.0,
+      "stale": false
+    },
+    {
+      "label": "Russell 2000 (IWM)",
+      "category": "equities.us",
+      "last": 290.64001,
+      "units": "usd",
+      "chg": {
+        "1d": -1.37,
+        "1w": -1.15,
+        "1m": -3.11,
+        "3m": 0.08,
+        "12m": 22.71
+      },
+      "pctile_5y": 95.2,
+      "stale": false
+    },
+    {
+      "label": "S&P 500",
+      "category": "equities.us",
+      "last": 7636.36,
+      "units": "index",
+      "chg": {
+        "1d": -0.48,
+        "1w": -0.39,
+        "1m": -1.51,
+        "3m": 3.27,
+        "12m": 17.25
+      },
+      "pctile_5y": 98.1,
       "stale": false
     },
     {
       "label": "EUR/INR",
       "category": "fx",
-      "last": 110.1315,
+      "last": 110.8225,
       "units": "rate",
       "chg": {
-        "1d": 0.28,
-        "1w": 0.08,
-        "1m": 0.28,
-        "3m": 0.19,
-        "12m": 6.67
+        "1d": 0.63,
+        "1w": 0.78,
+        "1m": 0.64,
+        "3m": 0.31,
+        "12m": 7.03
       },
-      "pctile_5y": 96.2,
+      "pctile_5y": 97.4,
       "stale": false
     },
     {
       "label": "EUR/SEK",
       "category": "fx",
-      "last": 11.152,
+      "last": 11.1495,
       "units": "rate",
       "chg": {
-        "1d": -0.09,
-        "1w": 0.34,
-        "1m": 1.89,
-        "3m": 1.7,
-        "12m": 1.38
+        "1d": -0.02,
+        "1w": -0.07,
+        "1m": 1.68,
+        "3m": 1.42,
+        "12m": 1.34
       },
-      "pctile_5y": 55.7,
+      "pctile_5y": 55.5,
       "stale": false
     },
     {
@@ -499,212 +499,192 @@
     {
       "label": "US 10Y Treasury yield",
       "category": "rates",
-      "last": 4.78,
+      "last": 4.8,
       "units": "percent",
       "chg": {
-        "1d": 0.21,
-        "1w": 1.06,
-        "1m": 3.24,
-        "3m": 5.05,
-        "12m": 14.63
+        "1d": 0.42,
+        "1w": 0.21,
+        "1m": 3.23,
+        "3m": 5.49,
+        "12m": 18.52
       },
-      "pctile_5y": 98.8,
+      "pctile_5y": 99.0,
       "stale": false
     },
     {
       "label": "US 10Y-2Y spread",
       "category": "rates",
-      "last": 0.41,
+      "last": 0.4,
       "units": "percent",
       "chg": {
-        "1d": 0.0,
-        "1w": 2.5,
-        "1m": -10.87,
-        "3m": -2.38,
-        "12m": -26.79
+        "1d": -2.44,
+        "1w": 0.0,
+        "1m": -14.89,
+        "3m": 0.0,
+        "12m": -25.93
       },
-      "pctile_5y": 65.8,
+      "pctile_5y": 64.9,
       "stale": false
     },
     {
       "label": "US 2Y Treasury yield",
       "category": "rates",
-      "last": 4.37,
+      "last": 4.39,
       "units": "percent",
       "chg": {
-        "1d": 0.69,
-        "1w": 0.69,
-        "1m": 4.55,
-        "3m": 4.8,
-        "12m": 21.73
+        "1d": 0.46,
+        "1w": 0.0,
+        "1m": 4.77,
+        "3m": 6.3,
+        "12m": 25.79
       },
-      "pctile_5y": 74.0,
+      "pctile_5y": 74.6,
       "stale": false
     },
     {
       "label": "US 30Y Treasury yield",
       "category": "rates",
-      "last": 5.24,
+      "last": 5.25,
       "units": "percent",
       "chg": {
-        "1d": -0.19,
-        "1w": 0.38,
-        "1m": 1.35,
-        "3m": 4.59,
-        "12m": 7.82
+        "1d": 0.19,
+        "1w": -0.38,
+        "1m": 1.16,
+        "3m": 4.37,
+        "12m": 11.94
       },
-      "pctile_5y": 99.2,
+      "pctile_5y": 99.5,
       "stale": false
     },
     {
       "label": "US High Yield OAS",
       "category": "rates",
-      "last": 2.68,
+      "last": 2.67,
       "units": "percent",
       "chg": {
-        "1d": 0.0,
-        "1w": 1.9,
-        "1m": -0.74,
-        "3m": -3.6,
-        "12m": -5.3
+        "1d": -0.37,
+        "1w": 0.75,
+        "1m": -1.11,
+        "3m": -4.64,
+        "12m": -5.99
       },
-      "pctile_5y": 8.0,
+      "pctile_5y": 6.9,
       "stale": false
     },
     {
       "label": "VIX",
       "category": "volatility",
-      "last": 15.3,
+      "last": 15.72,
       "units": "index",
       "chg": {
-        "1d": 5.3,
-        "1w": 2.55,
-        "1m": 2.68,
-        "3m": -23.0,
-        "12m": 0.79
+        "1d": 2.75,
+        "1w": -3.79,
+        "1m": 5.5,
+        "3m": -29.25,
+        "12m": 4.04
       },
-      "pctile_5y": 24.7,
+      "pctile_5y": 28.4,
       "stale": false
     }
   ],
   "regime": {
     "curve_10y_2y": 0.41,
     "curve_state": "positive",
-    "hy_oas": 2.68,
+    "hy_oas": 2.67,
     "credit_state": "tight"
   },
   "divergences": [
     {
       "pair": "Finland vs broad Europe",
-      "gap_1m_pp": 6.73,
-      "detail": "Finland (MSCI proxy +4.5% vs Euro area (EZU -2.2%"
+      "gap_1m_pp": 8.7,
+      "detail": "Finland (MSCI proxy +5.8% vs Euro area (EZU -2.9%"
     },
     {
       "pair": "Long rates vs equities",
-      "gap_1m_pp": 4.32,
-      "detail": "US 10Y Treasury yield +3.2% vs S&P 500 -1.1%"
+      "gap_1m_pp": 4.74,
+      "detail": "US 10Y Treasury yield +3.2% vs S&P 500 -1.5%"
     }
   ],
   "extremes_5y": [
     {
       "label": "Copper (CPER)",
-      "pctile_5y": 99.7,
-      "last": 40.57
+      "pctile_5y": 100.0,
+      "last": 41.049999
     },
     {
       "label": "Norway (MSCI proxy",
-      "pctile_5y": 99.3,
-      "last": 32.122568
-    },
-    {
-      "label": "US 30Y Treasury yield",
-      "pctile_5y": 99.2,
-      "last": 5.24
+      "pctile_5y": 99.8,
+      "last": 32.509898
     },
     {
       "label": "Norway (ENOR",
-      "pctile_5y": 98.9,
-      "last": 37.32
+      "pctile_5y": 99.7,
+      "last": 37.77
+    },
+    {
+      "label": "US 30Y Treasury yield",
+      "pctile_5y": 99.5,
+      "last": 5.25
     },
     {
       "label": "Finland (EFNL",
-      "pctile_5y": 98.8,
-      "last": 55.44
-    },
-    {
-      "label": "US 10Y Treasury yield",
-      "pctile_5y": 98.8,
-      "last": 4.78
+      "pctile_5y": 99.3,
+      "last": 56.009998
     },
     {
       "label": "Finland (MSCI proxy",
-      "pctile_5y": 98.8,
-      "last": 47.719057
+      "pctile_5y": 99.2,
+      "last": 48.209673
+    },
+    {
+      "label": "US 10Y Treasury yield",
+      "pctile_5y": 99.0,
+      "last": 4.8
     },
     {
       "label": "S&P 500",
-      "pctile_5y": 98.4,
-      "last": 7673.52
-    },
-    {
-      "label": "UK (EWU",
-      "pctile_5y": 98.4,
-      "last": 48.35
+      "pctile_5y": 98.1,
+      "last": 7636.36
     },
     {
       "label": "Euro area (EZU",
-      "pctile_5y": 98.3,
-      "last": 70.37
+      "pctile_5y": 97.7,
+      "last": 69.63
+    },
+    {
+      "label": "EUR/INR",
+      "pctile_5y": 97.4,
+      "last": 110.8225
     },
     {
       "label": "Nasdaq Composite",
-      "pctile_5y": 98.2,
-      "last": 26421.41
-    },
-    {
-      "label": "UK (EWU",
-      "pctile_5y": 98.0,
-      "last": 41.616457
-    },
-    {
-      "label": "Euro area (EZU",
-      "pctile_5y": 97.9,
-      "last": 60.569805
+      "pctile_5y": 97.0,
+      "last": 26253.34
     },
     {
       "label": "Dow Jones",
-      "pctile_5y": 97.9,
-      "last": 52786.07
+      "pctile_5y": 97.0,
+      "last": 52380.66
     },
     {
-      "label": "Sweden (MSCI proxy",
-      "pctile_5y": 97.8,
-      "last": 45.627473
-    },
-    {
-      "label": "Germany (EWG",
-      "pctile_5y": 97.5,
-      "last": 37.502152
+      "label": "UK (EWU",
+      "pctile_5y": 96.9,
+      "last": 41.168876
     },
     {
       "label": "Nasdaq 100",
-      "pctile_5y": 97.4,
-      "last": 29507.7
-    },
-    {
-      "label": "Russell 2000 (IWM)",
-      "pctile_5y": 96.9,
-      "last": 294.67001
-    },
-    {
-      "label": "Germany (EWG",
-      "pctile_5y": 96.7,
-      "last": 43.57
-    },
-    {
-      "label": "Sweden (EWD",
       "pctile_5y": 96.6,
-      "last": 53.009998
+      "last": 29421.55
+    },
+    {
+      "label": "UK (EWU",
+      "pctile_5y": 96.6,
+      "last": 47.83
+    },
+    {
+      "label": "Euro area (EZU",
+      "pctile_5y": 96.5,
+      "last": 59.932863
     },
     {
       "label": "Germany 10Y government bond yield",
@@ -712,9 +692,19 @@
       "last": 2.97
     },
     {
-      "label": "EUR/INR",
-      "pctile_5y": 96.2,
-      "last": 110.1315
+      "label": "Sweden (MSCI proxy",
+      "pctile_5y": 95.7,
+      "last": 45.085213
+    },
+    {
+      "label": "Russell 2000 (IWM)",
+      "pctile_5y": 95.2,
+      "last": 290.64001
+    },
+    {
+      "label": "Germany (EWG",
+      "pctile_5y": 95.2,
+      "last": 37.045964
     }
   ],
   "data_quality": {
