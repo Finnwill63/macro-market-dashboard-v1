@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T13:00:52+00:00",
+  "generated": "2026-09-22T11:50:48+00:00",
   "method": "percentile bands, 10y window, 20/80 cuts",
   "mix": {
     "bull": 1,
@@ -18,9 +18,9 @@
     {
       "driver": "European and Finnish growth",
       "band": "base",
-      "value": 1.588,
+      "value": 3.927,
       "units": "percent",
-      "to_bear": 6.116
+      "to_bear": 8.459
     }
   ],
   "drivers": [
@@ -39,18 +39,18 @@
         "means": "This is the reference rate almost every other asset is priced against. When it rises, future cash flows are discounted harder \u2014 and the assets hurt most are the ones whose value sits furthest out, which is exactly what early-stage equity is. A high reading works against valuations, exit timing and LP appetite simultaneously.",
         "watch": "Inflation surprises and central bank guidance move it. A sustained 50bp move in either direction shifts the band. Falling below roughly 3.5% would take it out of bear territory."
       },
-      "value": 4.94,
-      "percentile": 99.7,
+      "value": 5.01,
+      "percentile": 100.0,
       "band": "bear",
       "override_applied": false,
       "window_years": 10.0,
       "edges": {
         "bear_at": 4.23,
-        "bull_at": 1.65
+        "bull_at": 1.658
       },
-      "distance_to_bear": 0.71,
-      "distance_to_bull": 3.29,
-      "as_of": "2026-09-17"
+      "distance_to_bear": 0.78,
+      "distance_to_bull": 3.352,
+      "as_of": "2026-09-18"
     },
     {
       "driver": "risk_appetite",
@@ -68,7 +68,7 @@
         "watch": "Widens on default fears, banking stress or a growth scare. Worth pinning an absolute floor here \u2014 above 3% has historically meant real stress regardless of where the ten-year distribution sits."
       },
       "value": 1.64,
-      "percentile": 14.6,
+      "percentile": 14.7,
       "band": "bull",
       "override_applied": false,
       "window_years": 9.9,
@@ -95,8 +95,8 @@
         "means": "A rough stand-in for appetite to buy or list technology companies. When public tech multiples are strong, acquirers are more confident and the IPO window tends to be open \u2014 but this measures prices, not transactions.",
         "watch": "Replace it. The honest version would be IPO counts or M&A volume; no free source for either has been found yet. Until then, treat a strong reading as permission to look rather than evidence the window is open."
       },
-      "value": 21.22,
-      "percentile": 41.6,
+      "value": 23.78,
+      "percentile": 47.7,
       "band": "base",
       "override_applied": false,
       "window_years": 9.0,
@@ -104,9 +104,9 @@
         "bear_at": 6.098,
         "bull_at": 36.938
       },
-      "distance_to_bear": 15.122,
-      "distance_to_bull": 15.718,
-      "as_of": "2026-09-18"
+      "distance_to_bear": 17.682,
+      "distance_to_bull": 13.158,
+      "as_of": "2026-09-21"
     },
     {
       "driver": "finland_risk_pricing",
@@ -149,18 +149,18 @@
         "means": "A rough read on Finnish corporate conditions, and on the pool your spinouts and portfolio companies are growing in. When it is weak while Europe holds up, the problem is domestic rather than continental.",
         "watch": "The proxy is imperfect \u2014 MSCI Finland is not OMXH25, with different constituents and weights. Compare the EUR and USD versions of this series directly: the gap between them is pure currency, not Finnish companies."
       },
-      "value": 1.588,
-      "percentile": 49.4,
+      "value": 3.927,
+      "percentile": 61.2,
       "band": "base",
       "override_applied": false,
       "window_years": 9.7,
       "edges": {
-        "bear_at": -4.528,
-        "bull_at": 7.606
+        "bear_at": -4.532,
+        "bull_at": 7.608
       },
-      "distance_to_bear": 6.116,
-      "distance_to_bull": 6.018,
-      "as_of": "2026-09-18"
+      "distance_to_bear": 8.459,
+      "distance_to_bull": 3.681,
+      "as_of": "2026-09-21"
     },
     {
       "driver": "corridor_fx",
@@ -175,8 +175,8 @@
         "means": "The exchange rate the Nordics-India corridor runs on. A stronger euro makes Indian expansion cheaper to fund from Europe, but shrinks the euro value of revenue earned in India. Which direction helps depends entirely on where a company sits in that journey \u2014 pre-revenue expansion or repatriating earnings.",
         "watch": "Currently near the top of its five-year range, meaning the euro is historically strong against the rupee. Good for funding entry now; a headwind later if it holds when revenue starts coming back."
       },
-      "value": 5.514,
-      "percentile": 52.0,
+      "value": 6.41,
+      "percentile": 56.2,
       "band": "base",
       "override_applied": false,
       "window_years": 9.0,
@@ -184,9 +184,9 @@
         "bear_at": -2.053,
         "bull_at": 11.04
       },
-      "distance_to_bear": 7.567,
-      "distance_to_bull": 5.526,
-      "as_of": "2026-09-18"
+      "distance_to_bear": 8.463,
+      "distance_to_bull": 4.629,
+      "as_of": "2026-09-21"
     }
   ],
   "how_to_read": "Every number is scored against its own history rather than an absolute threshold. \"p98.8\" means today sits higher than 98.8% of the last ten years of that same series. The bands are the top and bottom fifth of that range. The known limitation: if a level persists for years it becomes the new normal and the band quietly resets, so no driver can stay bear indefinitely.\n",
