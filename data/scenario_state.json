@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T11:50:22+00:00",
+  "generated": "2026-09-24T11:58:31+00:00",
   "method": "percentile bands, 10y window, 20/80 cuts",
   "mix": {
     "bull": 1,
@@ -18,9 +18,9 @@
     {
       "driver": "Nordics-India corridor",
       "band": "base",
-      "value": 5.368,
+      "value": 4.354,
       "units": "percent",
-      "to_bear": 7.418
+      "to_bear": 6.401
     }
   ],
   "drivers": [
@@ -50,7 +50,7 @@
       },
       "distance_to_bear": 0.73,
       "distance_to_bull": 3.3,
-      "as_of": "2026-09-21"
+      "as_of": "2026-09-22"
     },
     {
       "driver": "risk_appetite",
@@ -95,18 +95,18 @@
         "means": "A rough stand-in for appetite to buy or list technology companies. When public tech multiples are strong, acquirers are more confident and the IPO window tends to be open \u2014 but this measures prices, not transactions.",
         "watch": "Replace it. The honest version would be IPO counts or M&A volume; no free source for either has been found yet. Until then, treat a strong reading as permission to look rather than evidence the window is open."
       },
-      "value": 24.116,
-      "percentile": 48.5,
+      "value": 23.963,
+      "percentile": 48.3,
       "band": "base",
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": 6.102,
-        "bull_at": 36.93
+        "bear_at": 6.107,
+        "bull_at": 36.922
       },
-      "distance_to_bear": 18.013,
-      "distance_to_bull": 12.814,
-      "as_of": "2026-09-22"
+      "distance_to_bear": 17.856,
+      "distance_to_bull": 12.959,
+      "as_of": "2026-09-23"
     },
     {
       "driver": "finland_risk_pricing",
@@ -149,18 +149,18 @@
         "means": "A rough read on Finnish corporate conditions, and on the pool your spinouts and portfolio companies are growing in. When it is weak while Europe holds up, the problem is domestic rather than continental.",
         "watch": "The proxy is imperfect \u2014 MSCI Finland is not OMXH25, with different constituents and weights. Compare the EUR and USD versions of this series directly: the gap between them is pure currency, not Finnish companies."
       },
-      "value": 5.292,
-      "percentile": 68.7,
+      "value": 2.499,
+      "percentile": 54.1,
       "band": "base",
       "override_applied": false,
       "window_years": 9.7,
       "edges": {
-        "bear_at": -4.528,
-        "bull_at": 7.606
+        "bear_at": -4.524,
+        "bull_at": 7.604
       },
-      "distance_to_bear": 9.82,
-      "distance_to_bull": 2.314,
-      "as_of": "2026-09-22"
+      "distance_to_bear": 7.023,
+      "distance_to_bull": 5.105,
+      "as_of": "2026-09-23"
     },
     {
       "driver": "corridor_fx",
@@ -175,18 +175,18 @@
         "means": "The exchange rate the Nordics-India corridor runs on. A stronger euro makes Indian expansion cheaper to fund from Europe, but shrinks the euro value of revenue earned in India. Which direction helps depends entirely on where a company sits in that journey \u2014 pre-revenue expansion or repatriating earnings.",
         "watch": "Currently near the top of its five-year range, meaning the euro is historically strong against the rupee. Good for funding entry now; a headwind later if it holds when revenue starts coming back."
       },
-      "value": 5.368,
-      "percentile": 51.7,
+      "value": 4.354,
+      "percentile": 46.8,
       "band": "base",
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": -2.05,
-        "bull_at": 11.038
+        "bear_at": -2.047,
+        "bull_at": 11.036
       },
-      "distance_to_bear": 7.418,
-      "distance_to_bull": 5.67,
-      "as_of": "2026-09-22"
+      "distance_to_bear": 6.401,
+      "distance_to_bull": 6.682,
+      "as_of": "2026-09-23"
     }
   ],
   "how_to_read": "Every number is scored against its own history rather than an absolute threshold. \"p98.8\" means today sits higher than 98.8% of the last ten years of that same series. The bands are the top and bottom fifth of that range. The known limitation: if a level persists for years it becomes the new normal and the band quietly resets, so no driver can stay bear indefinitely.\n",
