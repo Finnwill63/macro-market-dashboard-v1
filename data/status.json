@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-30T13:11:50+00:00",
-  "ok": 38,
+  "updated": "2026-11-03T14:29:11+00:00",
+  "ok": 37,
   "total": 38,
   "series": [
     {
@@ -150,8 +150,8 @@
     },
     {
       "id": "fx_eur_sek",
-      "state": "ok",
-      "source": "ecb_sdw"
+      "state": "stale",
+      "days": 4
     },
     {
       "id": "eq_nordic_finland_eur",
