@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-04T14:43:09+00:00",
+  "generated": "2026-11-05T14:47:30+00:00",
   "method": "percentile bands, 10y window, 20/80 cuts",
   "mix": {
     "bull": 1,
@@ -39,8 +39,8 @@
         "means": "This is the reference rate almost every other asset is priced against. When it rises, future cash flows are discounted harder \u2014 and the assets hurt most are the ones whose value sits furthest out, which is exactly what early-stage equity is. A high reading works against valuations, exit timing and LP appetite simultaneously.",
         "watch": "Inflation surprises and central bank guidance move it. A sustained 50bp move in either direction shifts the band. Falling below roughly 3.5% would take it out of bear territory."
       },
-      "value": 4.91,
-      "percentile": 98.4,
+      "value": 4.95,
+      "percentile": 98.6,
       "band": "bear",
       "override_applied": false,
       "window_years": 10.0,
@@ -48,9 +48,9 @@
         "bear_at": 4.25,
         "bull_at": 1.67
       },
-      "distance_to_bear": 0.66,
-      "distance_to_bull": 3.24,
-      "as_of": "2026-11-02"
+      "distance_to_bear": 0.7,
+      "distance_to_bull": 3.28,
+      "as_of": "2026-11-03"
     },
     {
       "driver": "risk_appetite",

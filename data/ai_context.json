@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-04T14:43:09+00:00",
+  "generated": "2026-11-05T14:47:30+00:00",
   "series": [
     {
       "label": "Copper (CPER)",
@@ -169,21 +169,6 @@
     {
       "label": "UK (EWU",
       "category": "equities.eu",
-      "last": 43.500851,
-      "units": "eur",
-      "chg": {
-        "1d": 2.66,
-        "1w": 2.47,
-        "1m": 5.58,
-        "3m": 3.76,
-        "12m": 18.51
-      },
-      "pctile_5y": 100.0,
-      "stale": false
-    },
-    {
-      "label": "UK (EWU",
-      "category": "equities.eu",
       "last": 48.56,
       "units": "usd",
       "chg": {
@@ -194,6 +179,21 @@
         "12m": 15.13
       },
       "pctile_5y": 99.0,
+      "stale": false
+    },
+    {
+      "label": "UK (EWU",
+      "category": "equities.eu",
+      "last": 43.500851,
+      "units": "eur",
+      "chg": {
+        "1d": 2.66,
+        "1w": 2.47,
+        "1m": 5.58,
+        "3m": 3.76,
+        "12m": 18.51
+      },
+      "pctile_5y": 100.0,
       "stale": false
     },
     {
@@ -499,61 +499,61 @@
     {
       "label": "US 10Y Treasury yield",
       "category": "rates",
-      "last": 4.91,
+      "last": 4.95,
       "units": "percent",
       "chg": {
-        "1d": -0.61,
-        "1w": -1.8,
-        "1m": -7.01,
-        "3m": 6.05,
-        "12m": 19.46
+        "1d": 0.81,
+        "1w": -0.8,
+        "1m": -6.25,
+        "3m": 6.91,
+        "12m": 19.85
       },
-      "pctile_5y": 96.9,
+      "pctile_5y": 97.3,
       "stale": false
     },
     {
       "label": "US 10Y-2Y spread",
       "category": "rates",
-      "last": 0.34,
+      "last": 0.32,
       "units": "percent",
       "chg": {
-        "1d": 6.25,
-        "1w": 17.24,
-        "1m": -24.44,
-        "3m": -24.44,
-        "12m": -35.85
+        "1d": -5.88,
+        "1w": -15.79,
+        "1m": -31.91,
+        "3m": -27.27,
+        "12m": -38.46
       },
-      "pctile_5y": 62.7,
+      "pctile_5y": 60.9,
       "stale": false
     },
     {
       "label": "US 2Y Treasury yield",
       "category": "rates",
-      "last": 4.59,
+      "last": 4.61,
       "units": "percent",
       "chg": {
-        "1d": 0.66,
-        "1w": -1.92,
-        "1m": -4.97,
-        "3m": 9.29,
-        "12m": 27.5
+        "1d": 0.44,
+        "1w": -1.91,
+        "1m": -4.55,
+        "3m": 10.29,
+        "12m": 28.06
       },
-      "pctile_5y": 78.6,
+      "pctile_5y": 79.4,
       "stale": false
     },
     {
       "label": "US 30Y Treasury yield",
       "category": "rates",
-      "last": 5.28,
+      "last": 5.32,
       "units": "percent",
       "chg": {
-        "1d": -0.56,
-        "1w": -0.56,
-        "1m": -6.22,
-        "3m": 1.93,
-        "12m": 13.06
+        "1d": 0.76,
+        "1w": 0.38,
+        "1m": -5.51,
+        "3m": 2.9,
+        "12m": 13.43
       },
-      "pctile_5y": 97.0,
+      "pctile_5y": 97.8,
       "stale": false
     },
     {
@@ -588,7 +588,7 @@
     }
   ],
   "regime": {
-    "curve_10y_2y": 0.32,
+    "curve_10y_2y": 0.34,
     "curve_state": "positive",
     "hy_oas": 3.4,
     "credit_state": "tight"
@@ -611,8 +611,8 @@
     },
     {
       "pair": "Long rates vs equities",
-      "gap_1m_pp": -4.66,
-      "detail": "US 10Y Treasury yield -7.0% vs S&P 500 -2.4%"
+      "gap_1m_pp": -3.9,
+      "detail": "US 10Y Treasury yield -6.2% vs S&P 500 -2.4%"
     },
     {
       "pair": "US vs European equities",
@@ -622,19 +622,19 @@
   ],
   "extremes_5y": [
     {
+      "label": "Finland 10Y government bond yield",
+      "pctile_5y": 100.0,
+      "last": 3.799477
+    },
+    {
       "label": "UK (EWU",
       "pctile_5y": 100.0,
       "last": 43.500851
     },
     {
-      "label": "Germany 10Y government bond yield",
+      "label": "Germany (EWG",
       "pctile_5y": 100.0,
-      "last": 3.469524
-    },
-    {
-      "label": "Finland 10Y government bond yield",
-      "pctile_5y": 100.0,
-      "last": 3.799477
+      "last": 38.748544
     },
     {
       "label": "Sweden (MSCI proxy",
@@ -642,9 +642,9 @@
       "last": 47.970976
     },
     {
-      "label": "Germany (EWG",
+      "label": "Germany 10Y government bond yield",
       "pctile_5y": 100.0,
-      "last": 38.748544
+      "last": 3.469524
     },
     {
       "label": "Norway (MSCI proxy",
@@ -662,24 +662,24 @@
       "last": 53.55
     },
     {
+      "label": "US 30Y Treasury yield",
+      "pctile_5y": 97.8,
+      "last": 5.32
+    },
+    {
       "label": "Euro area (EZU",
       "pctile_5y": 97.4,
       "last": 60.413867
     },
     {
+      "label": "US 10Y Treasury yield",
+      "pctile_5y": 97.3,
+      "last": 4.95
+    },
+    {
       "label": "Crude Oil (Brent)",
       "pctile_5y": 97.1,
       "last": 123.1
-    },
-    {
-      "label": "US 30Y Treasury yield",
-      "pctile_5y": 97.0,
-      "last": 5.28
-    },
-    {
-      "label": "US 10Y Treasury yield",
-      "pctile_5y": 96.9,
-      "last": 4.91
     },
     {
       "label": "Norway (ENOR",
