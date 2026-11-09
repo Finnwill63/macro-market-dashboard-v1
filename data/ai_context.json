@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-06T14:26:09+00:00",
+  "generated": "2026-11-09T16:38:10+00:00",
   "series": [
     {
       "label": "Copper (CPER)",
@@ -499,76 +499,76 @@
     {
       "label": "US 10Y Treasury yield",
       "category": "rates",
-      "last": 4.9,
+      "last": 4.84,
       "units": "percent",
       "chg": {
-        "1d": -1.01,
-        "1w": -2.97,
-        "1m": -7.72,
-        "3m": 4.48,
-        "12m": 19.51
+        "1d": -1.22,
+        "1w": -2.81,
+        "1m": -8.16,
+        "3m": 4.09,
+        "12m": 16.07
       },
-      "pctile_5y": 96.6,
+      "pctile_5y": 96.2,
       "stale": false
     },
     {
       "label": "US 10Y-2Y spread",
       "category": "rates",
-      "last": 0.38,
+      "last": 0.35,
       "units": "percent",
       "chg": {
-        "1d": 18.75,
-        "1w": 2.7,
-        "1m": -20.83,
-        "3m": -17.39,
-        "12m": -29.63
+        "1d": -7.89,
+        "1w": -7.89,
+        "1m": -31.37,
+        "3m": -23.91,
+        "12m": -35.19
       },
-      "pctile_5y": 65.9,
+      "pctile_5y": 63.5,
       "stale": false
     },
     {
       "label": "US 2Y Treasury yield",
       "category": "rates",
-      "last": 4.58,
+      "last": 4.46,
       "units": "percent",
       "chg": {
-        "1d": -0.65,
-        "1w": -1.93,
-        "1m": -5.37,
-        "3m": 7.76,
-        "12m": 27.93
+        "1d": -2.62,
+        "1w": -3.25,
+        "1m": -6.89,
+        "3m": 6.44,
+        "12m": 22.87
       },
-      "pctile_5y": 77.9,
+      "pctile_5y": 74.4,
       "stale": false
     },
     {
       "label": "US 30Y Treasury yield",
       "category": "rates",
-      "last": 5.28,
+      "last": 5.25,
       "units": "percent",
       "chg": {
-        "1d": -0.75,
-        "1w": -1.68,
-        "1m": -6.71,
-        "3m": 1.15,
-        "12m": 13.06
+        "1d": -0.57,
+        "1w": -1.32,
+        "1m": -6.91,
+        "3m": 1.16,
+        "12m": 10.76
       },
-      "pctile_5y": 97.0,
+      "pctile_5y": 96.3,
       "stale": false
     },
     {
       "label": "US High Yield OAS",
       "category": "rates",
-      "last": 3.32,
+      "last": 3.42,
       "units": "percent",
       "chg": {
-        "1d": -2.35,
-        "1w": 5.73,
-        "1m": 6.41,
-        "3m": 22.51,
-        "12m": 6.07
+        "1d": -1.72,
+        "1w": -0.58,
+        "1m": 10.68,
+        "3m": 26.67,
+        "12m": 9.27
       },
-      "pctile_5y": 82.4,
+      "pctile_5y": 87.6,
       "stale": false
     },
     {
@@ -588,9 +588,9 @@
     }
   ],
   "regime": {
-    "curve_10y_2y": 0.32,
+    "curve_10y_2y": 0.38,
     "curve_state": "positive",
-    "hy_oas": 3.32,
+    "hy_oas": 3.42,
     "credit_state": "tight"
   },
   "divergences": [
@@ -601,13 +601,13 @@
     },
     {
       "pair": "Credit spreads vs equities",
-      "gap_1m_pp": 7.51,
-      "detail": "US High Yield OAS +6.4% vs S&P 500 -1.1%"
+      "gap_1m_pp": 11.78,
+      "detail": "US High Yield OAS +10.7% vs S&P 500 -1.1%"
     },
     {
       "pair": "Long rates vs equities",
-      "gap_1m_pp": -6.62,
-      "detail": "US 10Y Treasury yield -7.7% vs S&P 500 -1.1%"
+      "gap_1m_pp": -7.06,
+      "detail": "US 10Y Treasury yield -8.2% vs S&P 500 -1.1%"
     },
     {
       "pair": "Finland vs broad Europe",
@@ -657,19 +657,19 @@
       "last": 7688.62
     },
     {
-      "label": "US 30Y Treasury yield",
-      "pctile_5y": 97.0,
-      "last": 5.28
-    },
-    {
-      "label": "US 10Y Treasury yield",
-      "pctile_5y": 96.6,
-      "last": 4.9
-    },
-    {
       "label": "UK (EWU",
       "pctile_5y": 96.5,
       "last": 47.89
+    },
+    {
+      "label": "US 30Y Treasury yield",
+      "pctile_5y": 96.3,
+      "last": 5.25
+    },
+    {
+      "label": "US 10Y Treasury yield",
+      "pctile_5y": 96.2,
+      "last": 4.84
     }
   ],
   "data_quality": {
