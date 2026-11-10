@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-09T16:38:10+00:00",
+  "generated": "2026-11-10T15:03:08+00:00",
   "method": "percentile bands, 10y window, 20/80 cuts",
   "mix": {
     "bull": 1,
-    "base": 3,
-    "bear": 2
+    "base": 4,
+    "bear": 1
   },
-  "headline": "3 base, 2 bear, 1 bull",
+  "headline": "4 base, 1 bear, 1 bull",
   "flip_watch": [
     {
       "driver": "Credit risk appetite",
@@ -39,8 +39,8 @@
         "means": "This is the reference rate almost every other asset is priced against. When it rises, future cash flows are discounted harder \u2014 and the assets hurt most are the ones whose value sits furthest out, which is exactly what early-stage equity is. A high reading works against valuations, exit timing and LP appetite simultaneously.",
         "watch": "Inflation surprises and central bank guidance move it. A sustained 50bp move in either direction shifts the band. Falling below roughly 3.5% would take it out of bear territory."
       },
-      "value": 4.84,
-      "percentile": 98.1,
+      "value": 4.86,
+      "percentile": 98.2,
       "band": "bear",
       "override_applied": false,
       "window_years": 10.0,
@@ -48,9 +48,9 @@
         "bear_at": 4.25,
         "bull_at": 1.67
       },
-      "distance_to_bear": 0.59,
-      "distance_to_bull": 3.17,
-      "as_of": "2026-11-05"
+      "distance_to_bear": 0.61,
+      "distance_to_bull": 3.19,
+      "as_of": "2026-11-06"
     },
     {
       "driver": "risk_appetite",
@@ -95,18 +95,18 @@
         "means": "A rough stand-in for appetite to buy or list technology companies. When public tech multiples are strong, acquirers are more confident and the IPO window tends to be open \u2014 but this measures prices, not transactions.",
         "watch": "Replace it. The honest version would be IPO counts or M&A volume; no free source for either has been found yet. Until then, treat a strong reading as permission to look rather than evidence the window is open."
       },
-      "value": 3.941,
-      "percentile": 17.2,
-      "band": "bear",
+      "value": 11.364,
+      "percentile": 26.9,
+      "band": "base",
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": 6.083,
-        "bull_at": 36.922
+        "bear_at": 6.06,
+        "bull_at": 36.938
       },
-      "distance_to_bear": 2.142,
-      "distance_to_bull": 32.98,
-      "as_of": "2026-11-05"
+      "distance_to_bear": 5.304,
+      "distance_to_bull": 25.574,
+      "as_of": "2026-11-09"
     },
     {
       "driver": "finland_risk_pricing",
