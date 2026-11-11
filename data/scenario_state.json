@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-10T15:03:08+00:00",
+  "generated": "2026-11-11T14:35:00+00:00",
   "method": "percentile bands, 10y window, 20/80 cuts",
   "mix": {
     "bull": 1,
@@ -39,8 +39,8 @@
         "means": "This is the reference rate almost every other asset is priced against. When it rises, future cash flows are discounted harder \u2014 and the assets hurt most are the ones whose value sits furthest out, which is exactly what early-stage equity is. A high reading works against valuations, exit timing and LP appetite simultaneously.",
         "watch": "Inflation surprises and central bank guidance move it. A sustained 50bp move in either direction shifts the band. Falling below roughly 3.5% would take it out of bear territory."
       },
-      "value": 4.86,
-      "percentile": 98.2,
+      "value": 4.88,
+      "percentile": 98.3,
       "band": "bear",
       "override_applied": false,
       "window_years": 10.0,
@@ -48,9 +48,9 @@
         "bear_at": 4.25,
         "bull_at": 1.67
       },
-      "distance_to_bear": 0.61,
-      "distance_to_bull": 3.19,
-      "as_of": "2026-11-06"
+      "distance_to_bear": 0.63,
+      "distance_to_bull": 3.21,
+      "as_of": "2026-11-09"
     },
     {
       "driver": "risk_appetite",
@@ -95,18 +95,18 @@
         "means": "A rough stand-in for appetite to buy or list technology companies. When public tech multiples are strong, acquirers are more confident and the IPO window tends to be open \u2014 but this measures prices, not transactions.",
         "watch": "Replace it. The honest version would be IPO counts or M&A volume; no free source for either has been found yet. Until then, treat a strong reading as permission to look rather than evidence the window is open."
       },
-      "value": 11.364,
-      "percentile": 26.9,
+      "value": 8.313,
+      "percentile": 23.1,
       "band": "base",
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": 6.06,
-        "bull_at": 36.938
+        "bear_at": 6.072,
+        "bull_at": 36.93
       },
-      "distance_to_bear": 5.304,
-      "distance_to_bull": 25.574,
-      "as_of": "2026-11-09"
+      "distance_to_bear": 2.241,
+      "distance_to_bull": 28.617,
+      "as_of": "2026-11-10"
     },
     {
       "driver": "finland_risk_pricing",
@@ -175,18 +175,18 @@
         "means": "The exchange rate the Nordics-India corridor runs on. A stronger euro makes Indian expansion cheaper to fund from Europe, but shrinks the euro value of revenue earned in India. Which direction helps depends entirely on where a company sits in that journey \u2014 pre-revenue expansion or repatriating earnings.",
         "watch": "Currently near the top of its five-year range, meaning the euro is historically strong against the rupee. Good for funding entry now; a headwind later if it holds when revenue starts coming back."
       },
-      "value": 4.096,
-      "percentile": 45.1,
+      "value": 2.651,
+      "percentile": 38.2,
       "band": "base",
       "override_applied": false,
       "window_years": 9.0,
       "edges": {
-        "bear_at": -2.047,
-        "bull_at": 11.036
+        "bear_at": -2.05,
+        "bull_at": 11.038
       },
-      "distance_to_bear": 6.143,
-      "distance_to_bull": 6.94,
-      "as_of": "2026-11-05"
+      "distance_to_bear": 4.701,
+      "distance_to_bull": 8.387,
+      "as_of": "2026-11-10"
     }
   ],
   "how_to_read": "Every number is scored against its own history rather than an absolute threshold. \"p98.8\" means today sits higher than 98.8% of the last ten years of that same series. The bands are the top and bottom fifth of that range. The known limitation: if a level persists for years it becomes the new normal and the band quietly resets, so no driver can stay bear indefinitely.\n",
